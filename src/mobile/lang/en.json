@@ -1,0 +1,8 @@
+{
+  "cux": {
+    "loadingA": "Please wait {second} second...",
+    "loadingB": "Please wait...",
+    "ok": "Ok",
+    "cancel": "Cancel"
+  }
+}

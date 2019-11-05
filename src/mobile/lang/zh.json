@@ -1,0 +1,8 @@
+{
+  "cux": {
+    "loadingA": "请等待 {second} 秒...",
+    "loadingB": "请等待...",
+    "ok": "确定",
+    "cancel": "取消"
+  }
+}
