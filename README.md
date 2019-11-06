@@ -1,6 +1,9 @@
 ###  基于vue框架技术的超集合
 
-为实现前端通用代码块的统一维护和更新创建，目前包含common和mobile两个模块集合。
+说明：
+1）经过众多移动端和PC端项目的实践，以作者所在公司项目的特点而创建
+2）主要为方便前端通用代码块的统一维护和更新，目前包含common和mobile两个模块集合
+3）想要作为自己公司项目的依赖来开发的，请谨慎使用
 
 集合结构预览：
 ```
@@ -135,8 +138,6 @@ Vue.use(common)
 Vue.use(mobile)
 ```
 
-集成框架：http://gitlab.e-buychina.com.cn/dev/ebuyweb-vue-h5.git
-
 #### 使用说明
 
 引入后，产生Vue全局变量：$util, $pattern, $cux, $http
@@ -152,6 +153,5 @@ this.$http.post(url, action, params, ...args)
 
 涉及到第三方插件的使用，统一来源：
 
-日期处理类库- https://github.com/moment/moment/
-涉及频率限制的工具库- https://github.com/lodash/lodash
-# vue-superset
+[日期处理类库](https://github.com/moment/moment/)
+[涉及频率限制的工具库](https://github.com/lodash/lodash)
