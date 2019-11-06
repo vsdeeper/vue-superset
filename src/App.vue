@@ -16,6 +16,10 @@ export default {
       version: 'v4.0',
       lang: 'en_US'
     })
+    this.$http.appId = '123456789'
+    this.$http.onTokenTimeout = () => {
+      console.log('登录失效确定')
+    }
   }
 }
 </script>

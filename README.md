@@ -96,6 +96,8 @@ common- 无任何依赖通用模块
 ```
 mobile- 主要针对移动端的集合，第三方基础依赖：vant，axios
   cux- 常用交互反馈
+    lang- 语言设置，支持zh/en
+    timeout- 超时倒计时（ms），默认 5000
     toast- 轻提示
     loading- loading开始
     loadend- loading结束
@@ -104,6 +106,10 @@ mobile- 主要针对移动端的集合，第三方基础依赖：vant，axios
     asyncConfirm- 异步确认框
 
   http- 接口交互方法
+    appId- 应用id配置
+    lang- 语言设置，支持zh/en
+    timeout- 超时配置（ms），默认 5000，务必和 cux-timeout 保持一致
+    onTokenTimeout- 登录失效（token）的回调逻辑配置
     post- post请求方法
 
 ```

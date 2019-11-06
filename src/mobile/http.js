@@ -3,6 +3,13 @@ import { cux } from './cux'
 import { util } from '../common/util'
 
 const http = {
+  appId: '100000',
+  lang: 'zh',
+  timeout: 5000,
+  onTokenTimeout: () => {},
+  getTrans () {
+    return require(`./lang/${this.lang}.json`)
+  },
   /**
    * post请求
    * @param url 请求地址
@@ -13,13 +20,13 @@ const http = {
   post (url, action, params, ...args) {
     const isNeedLoading = args.length > 0 ? args[0] : false
     const isCountDown = args.length > 1 ? args[1] : false
-    const countDown = args.length > 2 ? args[2] : global.timeout
+    const countDown = args.length > 2 ? args[2] : this.timeout
 
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
     return new Promise((resolve, reject) => {
       const data = {
         uuid: util.uuid(),
-        appId: global.appId,
+        appId: this.appId,
         action,
         timestamp: new Date().getTime(),
         content: params
@@ -39,7 +46,7 @@ const http = {
           }
         }).catch((err) => {
           reject(err)
-          catchErr(err.message)
+          catchErr(this, err.message)
         })
       } else {
         const loading = cux.loading(isCountDown, countDown)
@@ -60,38 +67,36 @@ const http = {
           }
         }).catch((err) => {
           reject(err)
-          catchErr(err.message, loading)
+          catchErr(this, err.message, loading)
         })
       }
     })
 
-    function catchErr (msg, loading) {
+    function catchErr (_this, msg, loading) {
+      const trans = _this.getTrans().http
       if (msg.indexOf('timeout') >= 0) { // 超时处理
-        cux.toast('Request timed out, please try again later')
+        cux.toast(trans.timeout)
       } else if (msg.indexOf('Network') >= 0) { // 网络连接失败处理
         if (loading) {
           cux.loadend().then(() => {
             clearInterval(loading)
-            cux.toast('Network connection failed')
+            cux.toast(trans.networkFail)
           })
         } else {
-          cux.toast('Network connection failed')
+          cux.toast(trans.networkFail)
         }
       }
     }
 
     function interactionHandle (_this, d) {
+      const trans = _this.getTrans().http
       if (!d.success) {
         switch (d.errorCode) {
           case 'TOKEN_TIME_OUT':
             cux.alert({
-              message: 'Login has expired'
+              message: trans.tokenExpired
             }).then(() => {
-              const href = window.location.href
-              const base = href.split('#')
-              const qrcodeNumber = _this.storageGet('local', 'qrcodeNumber')
-              _this.storageDel('local', 'token')
-              window.location.replace(`${base[0]}#/welcome?qrcodeNumber=${qrcodeNumber}`)
+              _this.onTokenTimeout()
             })
             break
           default:

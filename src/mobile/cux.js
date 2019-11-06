@@ -11,13 +11,14 @@ import { Toast, Dialog } from 'vant'
 
 const cux = {
   lang: 'zh',
+  timeout: 5000,
+  getTrans () {
+    return require(`./lang/${this.lang}.json`)
+  },
   /**
    * 轻提示
    * @param message 文字信息
    */
-  getTrans () {
-    return require(`./lang/${this.lang}.json`)
-  },
   toast (message) {
     Toast({
       duration: 3000,
@@ -32,7 +33,7 @@ const cux = {
     const trans = this.getTrans().cux
     let timer
     const _showCountDown = typeof showCountDown === 'undefined' ? false : showCountDown
-    const _countDown = typeof countDown === 'undefined' ? 5000 : countDown
+    const _countDown = typeof countDown === 'undefined' ? this.timeout : countDown
     let second = _countDown / 1000 // 倒计时秒数，需和axios超时时间配置一致
 
     const toast = Toast.loading({

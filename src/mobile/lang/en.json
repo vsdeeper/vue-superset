@@ -4,5 +4,10 @@
     "loadingB": "Please wait...",
     "ok": "Ok",
     "cancel": "Cancel"
+  },
+  "http": {
+    "timeout": "Request timed out, please try again later",
+    "networkFail": "Network connection failed",
+    "tokenExpired": "Login has expired"
   }
 }

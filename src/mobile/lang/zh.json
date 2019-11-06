@@ -4,5 +4,10 @@
     "loadingB": "请等待...",
     "ok": "确定",
     "cancel": "取消"
+  },
+  "http": {
+    "timeout": "请求超时，请稍后重试",
+    "networkFail": "网络连接失败",
+    "tokenExpired": "登录失效"
   }
 }
