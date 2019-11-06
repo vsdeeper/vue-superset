@@ -5,5 +5,5 @@ shell.rm('-rf', 'common')
 shell.rm('-rf', 'mobile')
 
 // 复制
-shell.cp('-R', 'src/common/', './')
-shell.cp('-R', 'src/mobile/', './')
+shell.cp('-R', 'src/superset/common/', './')
+shell.cp('-R', 'src/superset/mobile/', './')

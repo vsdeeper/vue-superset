@@ -2,23 +2,16 @@
   "name": "vue-superset",
   "version": "1.0.8",
   "author": "como",
-  "files": [
-    "common",
-    "mobile"
-  ],
-  "keywords": [
-    "vue",
-    "util",
-    "http",
-    "mobile",
-    "component"
-  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "release": "node scripts/release.js && sh scripts/release.sh"
   },
+  "files": [
+    "common",
+    "mobile"
+  ],
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.3.2",
@@ -27,6 +20,7 @@
     "vconsole": "^3.3.4",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
+    "vuetify": "^2.1.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -41,8 +35,17 @@
     "node-sass": "^4.13.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-cli-plugin-vuetify": "^2.0.2",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.3.0"
   },
+  "keywords": [
+    "vue",
+    "util",
+    "http",
+    "mobile",
+    "component"
+  ],
   "license": "ISC",
   "repository": {
     "type": "git",
