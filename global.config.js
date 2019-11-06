@@ -1,6 +1,4 @@
 module.exports = {
-  appId: '057a1413360f4f2fa682817f9fd43644', // 应用id
-  timeout: 5000, // 前端接口通讯超时时间设置，单位ms，必须为整秒
   publicPath: '/', // 项目部署的子路径，默认为域名的根路径，例如 /my-app/
   prodDomain: 'xxxx', // 生产接口域名
   devDomain: 'xxxx', // 测试接口域名
