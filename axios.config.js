@@ -1,5 +1,4 @@
 import axios from 'axios'
-import VConsole from 'vconsole'
 
 const global = require('./global.config')
 
@@ -9,11 +8,8 @@ const domain = document.domain // 获取页面域名
 if (domain === global.prodDomain) { // 生产环境
   baseURL = 'https://' + global.prodDomain + global.prodPublicPath
 } else if (domain === global.devDomain) { // 测试环境
-  /* eslint-disable no-new */
-  new VConsole()
   baseURL = 'https://' + global.devDomain + global.devPublicPath
 } else {
-  new VConsole()
   baseURL = global.mockPublicPath
 }
 

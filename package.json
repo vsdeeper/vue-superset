@@ -10,11 +10,13 @@
   },
   "files": [
     "common",
-    "mobile"
+    "mobile",
+    "pc"
   ],
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.3.2",
+    "fontmin": "^0.9.8",
     "shelljs": "^0.8.3",
     "vant": "^2.2.10",
     "vconsole": "^3.3.4",
