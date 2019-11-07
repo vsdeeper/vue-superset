@@ -4,7 +4,7 @@
 const Fontmin = require('fontmin');
 
 const fontmin = new Fontmin()
-    .src('scripts/fonts/pingfang-regular.ttf')
+    .src('scripts/fonts/PingFang-SC-Regular.ttf')
     .dest('scripts/fonts/dist');
 
 fontmin.run(function (err, files) {
