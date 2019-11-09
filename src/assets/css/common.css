@@ -1,5 +1,29 @@
 @import '../fonts/pingfang-regular.css';
 
-body {
+body, .v-application {
   font-family: "pingfang-regular";
+}
+
+.v-list-item--dense .v-list-item__title, 
+.v-list-item--dense .v-list-item__subtitle, 
+.v-list--dense .v-list-item .v-list-item__title, 
+.v-list--dense .v-list-item .v-list-item__subtitle {
+  font-weight: normal;
+}
+
+.v-navigation-drawer--mini-variant .v-list-group--no-action .v-list-group__items,
+.v-navigation-drawer--mini-variant .v-list-group--sub-group {
+  display: block;
+}
+.v-application--is-ltr .v-list-group--no-action > .v-list-group__items > div > .v-list-item {
+  padding-left: 16px;
+}
+.v-list-item__action > .text-uppercase {
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 0;
+  text-align: center;
+}
+.v-navigation-drawer--mini-variant .v-list-item {
+  justify-content: flex-start;
 }

@@ -2,10 +2,13 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      :clipped="$vuetify.breakpoint.lgAndUp"
+      mini-variant-width="72"
+      :expand-on-hover="expandonhover"
+      permanent
+      dark
       app
     >
-      <v-list dense>
+      <v-list rounded dense>
         <template v-for="item in items">
           <v-list-group
             v-if="item.children"
@@ -25,6 +28,9 @@
               :key="item.title"
               link
             >
+              <v-list-item-action>
+                <p class="text-uppercase">{{item.id}}</p>
+              </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title v-text="item.title"></v-list-item-title>
               </v-list-item-content>
@@ -45,90 +51,15 @@
           </v-list-item>
         </template>
       </v-list>
-      <!-- <v-list dense>
-        <template v-for="item in items">
-          <v-row
-            v-if="item.heading"
-            :key="item.heading"
-            align="center"
-          >
-            <v-col cols="6">
-              <v-subheader v-if="item.heading">
-                {{ item.heading }}
-              </v-subheader>
-            </v-col>
-            <v-col
-              cols="6"
-              class="text-center"
-            >
-              <a
-                href="#!"
-                class="body-2 black--text"
-              >EDIT</a>
-            </v-col>
-          </v-row>
-          <v-list-group
-            v-else-if="item.children"
-            :key="item.text"
-            v-model="item.model"
-            :prepend-icon="item.icon"
-            :append-icon="item.model ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-          >
-            <template v-slot:activator>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    {{ item.text }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-            <v-list-item
-              v-for="(child, i) in item.children"
-              :key="i"
-              link
-            >
-              <v-list-item-action v-if="child.icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ child.text }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-          <v-list-item
-            v-else
-            :key="item.text"
-            link
-          >
-            <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list> -->
     </v-navigation-drawer>
 
     <v-app-bar
-      :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
-      color="blue darken-3"
-      dark
+      color="rgb(250, 250, 250, 0.95)"
+      elevate-on-scroll
     >
-      <v-toolbar-title
-        style="width: 300px"
-        class="ml-0 pl-4"
-      >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-        <span class="hidden-sm-and-down">订单管理平台</span>
-      </v-toolbar-title>
+      <v-app-bar-nav-icon @click.stop="expandonhover = !expandonhover"></v-app-bar-nav-icon>
+      <v-toolbar-title>后管平台</v-toolbar-title>
       <v-text-field
         flat
         solo-inverted
@@ -143,19 +74,6 @@
       </v-btn>
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        large
-      >
-        <v-avatar
-          size="32px"
-          item
-        >
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          /></v-avatar>
       </v-btn>
     </v-app-bar>
     <v-content>
@@ -216,7 +134,8 @@ export default {
   },
   data: () => ({
     dialog: false,
-    drawer: null,
+    drawer: true,
+    expandonhover: true,
     items: [
       {
         icon: 'mdi-apps',
@@ -227,7 +146,10 @@ export default {
         title: '客户管理',
         active: false,
         children: [
-          { title: '客户列表' }
+          {
+            id: 'cl',
+            title: '客户列表'
+          }
         ]
       },
       {
@@ -235,7 +157,10 @@ export default {
         title: '入库管理',
         active: false,
         children: [
-          { title: '入库列表' }
+          {
+            id: 'be',
+            title: '入库列表'
+          }
         ]
       },
       {
@@ -243,7 +168,10 @@ export default {
         title: '订单管理',
         active: false,
         children: [
-          { title: '订单列表' }
+          {
+            id: 'ol',
+            title: '订单列表'
+          }
         ]
       },
       {
@@ -251,8 +179,14 @@ export default {
         title: '发货管理',
         active: false,
         children: [
-          { title: '配卡管理' },
-          { title: '物流管理' }
+          {
+            id: 'pg',
+            title: '配卡管理'
+          },
+          {
+            id: 'wg',
+            title: '物流管理'
+          }
         ]
       },
       {
@@ -260,8 +194,14 @@ export default {
         title: '财务管理',
         active: false,
         children: [
-          { title: '审核开票' },
-          { title: '开票记录' }
+          {
+            id: 'sk',
+            title: '审核开票'
+          },
+          {
+            id: 'kj',
+            title: '开票记录'
+          }
         ]
       }
     ]
@@ -271,3 +211,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.v-toolbar {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.03), 0px 3px 10px 0px rgba(0, 0, 0, 0.05);
+}
+</style>
