@@ -1,4 +1,5 @@
 @import '../fonts/PingFang-SC-Light.css';
+@import './navigation.css';
 
 body, .v-application {
   font-family: "PingFang-SC-Light";
@@ -9,25 +10,4 @@ body, .v-application {
 .v-list--dense .v-list-item .v-list-item__title, 
 .v-list--dense .v-list-item .v-list-item__subtitle {
   font-weight: normal;
-}
-
-.v-navigation-drawer--mini-variant .v-list-group--no-action .v-list-group__items,
-.v-navigation-drawer--mini-variant .v-list-group--sub-group {
-  display: block;
-}
-.v-application--is-ltr .v-list-group--no-action > .v-list-group__items > div > .v-list-item {
-  padding-left: 16px;
-}
-.v-list-item__action > .text-uppercase {
-  width: 100%;
-  font-size: 14px;
-  margin-bottom: 0;
-  text-align: center;
-}
-
-.v-navigation-drawer {
-  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
-}
-.v-navigation-drawer--mini-variant .v-list-item {
-  justify-content: flex-start;
 }

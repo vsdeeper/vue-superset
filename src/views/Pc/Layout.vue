@@ -1,20 +1,24 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
+      class="my-navigation-drawer"
       v-model="drawer"
       mini-variant-width="72"
       :expand-on-hover="expandonhover"
       permanent
+      color="purple"
       dark
       app
     >
-      <v-list rounded dense>
+      <v-list rounded dense expand>
         <template v-for="item in items">
           <v-list-group
             v-if="item.children"
             :key="item.title"
+            color="#fff"
             v-model="item.active"
             :prepend-icon="item.icon"
+            active-class="header-active"
             no-action
           >
             <template v-slot:activator>
@@ -26,6 +30,8 @@
             <v-list-item
               v-for="item in item.children"
               :key="item.title"
+              :to="item.path"
+              exact-active-class="children-active"
               link
             >
               <v-list-item-action>
@@ -40,6 +46,8 @@
           <v-list-item
             v-else
             :key="item.title"
+            :to="item.path"
+            exact-active-class="children-active"
             link
           >
             <v-list-item-action>
@@ -73,7 +81,7 @@
         <v-icon>mdi-bell</v-icon>
       </v-btn>
       <v-menu
-        transition="scale-transition"
+        transition="slide-x-reverse-transition"
         offset-y
         :close-on-content-click="false"
       >
@@ -86,46 +94,7 @@
             <v-icon>mdi-settings</v-icon>
           </v-btn>
         </template>
-        <v-card class="side-bar-set">
-          <v-list dense>
-            <v-list-item class="header">
-              侧边栏色调
-            </v-list-item>
-            <v-list-item class="colors">
-              <span
-                v-for="item in sidebarColors" :key="item.color"
-                :class="[item.color, {active: item.active}]"
-              ></span>
-            </v-list-item>
-            <v-divider></v-divider>
-            <v-list-item class="header">
-              侧边栏背景色
-            </v-list-item>
-            <v-list-item class="colors">
-              <span
-                v-for="item in sidebarBg" :key="item.color"
-                :class="[item.color, {active: item.active}]"
-              ></span>
-            </v-list-item>
-            <v-divider></v-divider>
-            <v-list-item class="switchs">
-              迷你侧边栏
-              <v-switch color="purple"></v-switch>
-            </v-list-item>
-            <v-divider></v-divider>
-            <v-list-item class="switchs">
-              侧边栏背景图
-              <v-switch color="purple"></v-switch>
-            </v-list-item>
-            <v-divider></v-divider>
-            <v-list-item class="header">
-              图片
-            </v-list-item>
-            <v-list-item class="imgs">
-              <img v-for="item in sidebarImages" :key="item.src" :src="item.src" :class="[{active: item.active}]" />
-            </v-list-item>
-          </v-list>
-        </v-card>
+        <side-bar-set></side-bar-set>
       </v-menu>
     </v-app-bar>
     <v-content>
@@ -133,47 +102,27 @@
         class="fill-height"
         fluid
       >
-      主体内容
+      <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import { SideBarSet } from '@/components'
+
 export default {
-  props: {
-    source: String
+  components: {
+    SideBarSet
   },
   data: () => ({
     drawer: true,
     expandonhover: true,
-    sidebarBackgroundColor: 'black',
-    sidebarBackground: 'green',
-    sidebarBackgroundImage: './assets/img/sidebar-2.jpg',
-    sidebarMini: true,
-    sidebarImg: true,
-    sidebarColors: [
-      { color: 'purple', active: false },
-      { color: 'blue', active: false },
-      { color: 'green', active: true },
-      { color: 'orange', active: false },
-      { color: 'pink', active: false },
-      { color: 'red', active: false }
-    ],
-    sidebarBg: [
-      { color: 'black', active: true },
-      { color: 'red', active: false }
-    ],
-    sidebarImages: [
-      { src: require('@/assets/img/sidebar-1.jpg'), active: false },
-      { src: require('@/assets/img/sidebar-2.jpg'), active: true },
-      { src: require('@/assets/img/sidebar-3.jpg'), active: false },
-      { src: require('@/assets/img/sidebar-4.jpg'), active: false }
-    ],
     items: [
       {
         icon: 'mdi-apps',
-        title: '面板'
+        title: '面板',
+        path: '/pc/home'
       },
       {
         icon: 'mdi-account-box-multiple',
@@ -182,7 +131,8 @@ export default {
         children: [
           {
             id: 'cl',
-            title: '客户列表'
+            title: '客户列表',
+            path: '/pc/test'
           }
         ]
       },
@@ -240,8 +190,26 @@ export default {
       }
     ]
   }),
+  methods: {
+    isActive (item) {
+      if (this.$route && this.$route.path) {
+        return this.$route.path.startsWith(item.path)
+      }
+      return false
+    }
+  },
   created () {
     this.$store.commit('destroyVconsole')
+    const path = this.$route.path
+    this.items.find(ele1 => {
+      if (ele1.children) {
+        ele1.children.find(ele2 => {
+          if (ele2.path && ele2.path.startsWith(path)) {
+            ele1.active = true
+          }
+        })
+      }
+    })
   }
 }
 </script>
@@ -252,42 +220,5 @@ export default {
 }
 .app-bar-search {
   flex: 0 1 200px;
-}
-.side-bar-set {
-  .header {
-    font-size: 14px;
-    justify-content: space-around;
-  }
-  .switchs {
-    font-size: 14px;
-    justify-content: space-between;
-  }
-  .colors {
-    display: block;
-    text-align: center;
-    span {
-      display: inline-block;
-      cursor: pointer;
-      width: 15px;
-      height: 15px;
-      margin: 0 4px;
-      border-radius: 50%;
-      border: 3px solid #fff !important;
-      box-sizing: content-box;
-      &.active {
-        border-color: #CDDC39 !important;
-      }
-    }
-  }
-  .imgs {
-    img {
-      width: 65px;
-      border-radius: 10px;
-      border: 3px solid #fff;
-      &.active {
-        border-color: #CDDC39;
-      }
-    }
-  }
 }
 </style>

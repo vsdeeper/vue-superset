@@ -1,5 +1,6 @@
 import Layout from '@/views/Pc/Layout'
-import Home from '@/views/Pc/Home'
+import Home from '@/views/Pc/Home.vue'
+import Test from '@/views/Pc/Test.vue'
 
 export default {
   path: '/pc',
@@ -9,7 +10,12 @@ export default {
     {
       path: 'home',
       name: 'pc端示例',
-      component: Home
+      components: { default: Home }
+    },
+    {
+      path: 'test',
+      name: 'pc端test',
+      components: { default: Test }
     }
   ]
 }
