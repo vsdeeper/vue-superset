@@ -1,7 +1,7 @@
-@import '../fonts/pingfang-regular.css';
+@import '../fonts/PingFang-SC-Light.css';
 
 body, .v-application {
-  font-family: "pingfang-regular";
+  font-family: "PingFang-SC-Light";
 }
 
 .v-list-item--dense .v-list-item__title, 
