@@ -28,7 +28,7 @@
 .my-navigation-drawer .v-list--rounded .v-list-item,
 .my-navigation-drawer .v-list--rounded .v-list-item:before,
 .my-navigation-drawer .v-list--rounded .v-ripple__container {
-  border-radius: 5px !important;
+  border-radius: 3px !important;
 }
 .my-navigation-drawer .v-list-item--dense,
 .my-navigation-drawer .v-list--dense .v-list-item {
@@ -36,6 +36,7 @@
 }
 .my-navigation-drawer .v-list .v-list-item--active.children-active {
   background-color: #4caf50;
+  box-shadow: 0 12px 20px -10px rgba(76, 175, 80, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(76, 175, 80, 0.2);
 }
 .my-navigation-drawer .v-list .v-list-item--active.header-active {
   background-color: rgba(255, 255, 255, 0.2);
@@ -47,5 +48,8 @@
   opacity: 0;
 }
 .my-navigation-drawer .v-list-group {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+}
+.my-navigation-drawer .v-list--rounded.v-list--dense .v-list-item:not(:last-child):not(:only-child) {
+  margin-bottom: 8px;
 }
