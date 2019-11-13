@@ -22,7 +22,7 @@
           >
             <template v-slot:activator>
               <v-list-item-avatar>
-                <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+                <v-img src="@/assets/img/avatar.jpg"></v-img>
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>Como Chen</v-list-item-title>
@@ -136,10 +136,7 @@
       </v-menu>
     </v-app-bar>
     <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
+      <v-container fluid>
       <router-view></router-view>
       </v-container>
     </v-content>

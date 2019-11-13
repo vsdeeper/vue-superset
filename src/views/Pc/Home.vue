@@ -1,7 +1,14 @@
 <template>
-  <div class="home">
-
-  </div>
+  <v-card width="100%">
+    <v-card-title class="headline">标题</v-card-title>
+    <v-card-subtitle>副标题</v-card-subtitle>
+    <v-card-text>正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文</v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn depressed>重置</v-btn>
+      <v-btn depressed color="success">提交</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
