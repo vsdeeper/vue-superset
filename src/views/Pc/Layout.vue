@@ -2,14 +2,47 @@
   <v-app id="inspire">
     <v-navigation-drawer
       class="my-navigation-drawer"
+      :class="{'display-bg-img': displayBgImg}"
       v-model="drawer"
       mini-variant-width="72"
       :expand-on-hover="expandonhover"
-      permanent
-      color="purple"
+      :permanent="true"
+      :color="sidebarBg"
+      :src="siderbarSrc"
       dark
       app
     >
+      <template v-slot:prepend>
+        <v-list>
+          <v-list-group
+            class="avatar-group"
+            color="#fff"
+            :value="false"
+            no-action
+          >
+            <template v-slot:activator>
+              <v-list-item-avatar>
+                <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title>Como Chen</v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item link>
+              <v-list-item-action>
+                <v-icon>mdi-logout-variant</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>登录退出</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </template>
+
+      <v-divider></v-divider>
+
       <v-list rounded dense expand>
         <template v-for="item in items">
           <v-list-group
@@ -18,7 +51,6 @@
             color="#fff"
             v-model="item.active"
             :prepend-icon="item.icon"
-            active-class="header-active"
             no-action
           >
             <template v-slot:activator>
@@ -31,7 +63,7 @@
               v-for="item in item.children"
               :key="item.title"
               :to="item.path"
-              exact-active-class="children-active"
+              :exact-active-class="sidebarColor"
               link
             >
               <v-list-item-action>
@@ -47,7 +79,7 @@
             v-else
             :key="item.title"
             :to="item.path"
-            exact-active-class="children-active"
+            :exact-active-class="sidebarColor"
             link
           >
             <v-list-item-action>
@@ -94,7 +126,13 @@
             <v-icon>mdi-settings</v-icon>
           </v-btn>
         </template>
-        <side-bar-set></side-bar-set>
+        <side-bar-set
+          @change-sidebar-color="changeSidebarColor"
+          @change-sidebar-bg="changeSidebarBg"
+          @change-mini-sidebar="changeMiniSidebar"
+          @change-sidebar-img="changeSidebarImg"
+          @toggle-sidebar-img="toggleSidebarImg"
+        ></side-bar-set>
       </v-menu>
     </v-app-bar>
     <v-content>
@@ -118,6 +156,10 @@ export default {
   data: () => ({
     drawer: true,
     expandonhover: true,
+    displayBgImg: true,
+    sidebarColor: 'green',
+    sidebarBg: 'black',
+    siderbarSrc: require('@/assets/img/sidebar-1.jpg'),
     items: [
       {
         icon: 'mdi-apps',
@@ -191,11 +233,20 @@ export default {
     ]
   }),
   methods: {
-    isActive (item) {
-      if (this.$route && this.$route.path) {
-        return this.$route.path.startsWith(item.path)
-      }
-      return false
+    changeSidebarColor (color) {
+      this.sidebarColor = color
+    },
+    changeSidebarBg (color) {
+      this.sidebarBg = color
+    },
+    changeMiniSidebar (e) {
+      this.expandonhover = e
+    },
+    changeSidebarImg (e) {
+      this.displayBgImg = e
+    },
+    toggleSidebarImg (src) {
+      this.siderbarSrc = src
     }
   },
   created () {

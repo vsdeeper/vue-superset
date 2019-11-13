@@ -6,8 +6,9 @@
       </v-list-item>
       <v-list-item class="colors">
         <span
-          v-for="item in sidebarColors" :key="item.color"
+          v-for="(item, i) in sidebarColors" :key="item.color"
           :class="[item.color, {active: item.active}]"
+          @click="changeSidebarColor(i, item.active, item.color)"
         ></span>
       </v-list-item>
       <v-divider></v-divider>
@@ -16,26 +17,32 @@
       </v-list-item>
       <v-list-item class="colors">
         <span
-          v-for="item in sidebarBg" :key="item.color"
+          v-for="(item, i) in sidebarBg" :key="item.color"
           :class="[item.color, {active: item.active}]"
+          @click="changeSidebarBg(i, item.active, item.color)"
         ></span>
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item class="switchs">
         迷你侧边栏
-        <v-switch color="purple"></v-switch>
+        <v-switch input-value="true" color="purple" @change="changeMiniSidebar"></v-switch>
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item class="switchs">
         侧边栏背景图
-        <v-switch color="purple"></v-switch>
+        <v-switch input-value="true" color="purple" @change="changeSidebarImg"></v-switch>
       </v-list-item>
       <v-divider></v-divider>
       <v-list-item class="header">
         图片
       </v-list-item>
       <v-list-item class="imgs">
-        <img v-for="item in sidebarImages" :key="item.src" :src="item.src" :class="[{active: item.active}]" />
+        <img
+          v-for="(item, i) in sidebarImages"
+          :key="item.src"
+          :src="item.src"
+          :class="[{active: item.active}]"
+          @click="toggleSidebarImg(i, item.active, item.src)" />
       </v-list-item>
     </v-list>
   </v-card>
@@ -51,19 +58,59 @@ export default {
         { color: 'blue', active: false },
         { color: 'green', active: true },
         { color: 'orange', active: false },
-        { color: 'pink', active: false },
-        { color: 'red', active: false }
+        { color: 'pink', active: false }
       ],
       sidebarBg: [
         { color: 'black', active: true },
         { color: 'red', active: false }
       ],
       sidebarImages: [
-        { src: require('@/assets/img/sidebar-1.jpg'), active: false },
-        { src: require('@/assets/img/sidebar-2.jpg'), active: true },
+        { src: require('@/assets/img/sidebar-1.jpg'), active: true },
+        { src: require('@/assets/img/sidebar-2.jpg'), active: false },
         { src: require('@/assets/img/sidebar-3.jpg'), active: false },
         { src: require('@/assets/img/sidebar-4.jpg'), active: false }
       ]
+    }
+  },
+  methods: {
+    changeSidebarColor (i, active, color) {
+      if (!active) {
+        this.sidebarColors.find(ele => {
+          if (ele.active) {
+            ele.active = false
+          }
+        })
+        this.sidebarColors[i].active = true
+        this.$emit('change-sidebar-color', color)
+      }
+    },
+    changeSidebarBg (i, active, color) {
+      if (!active) {
+        this.sidebarBg.find(ele => {
+          if (ele.active) {
+            ele.active = false
+          }
+        })
+        this.sidebarBg[i].active = true
+        this.$emit('change-sidebar-bg', color)
+      }
+    },
+    changeMiniSidebar (e) {
+      this.$emit('change-mini-sidebar', e)
+    },
+    changeSidebarImg (e) {
+      this.$emit('change-sidebar-img', e)
+    },
+    toggleSidebarImg (i, active, src) {
+      if (!active) {
+        this.sidebarImages.find(ele => {
+          if (ele.active) {
+            ele.active = false
+          }
+        })
+        this.sidebarImages[i].active = true
+        this.$emit('toggle-sidebar-img', src)
+      }
     }
   }
 }
