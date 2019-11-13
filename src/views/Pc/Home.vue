@@ -5,8 +5,8 @@
     <v-card-text>正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文</v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn depressed>重置</v-btn>
-      <v-btn depressed color="success">提交</v-btn>
+      <v-btn>重置</v-btn>
+      <v-btn color="success">提交</v-btn>
     </v-card-actions>
   </v-card>
 </template>

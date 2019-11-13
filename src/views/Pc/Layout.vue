@@ -140,11 +140,16 @@
       <router-view></router-view>
       </v-container>
     </v-content>
+    <cm-toast></cm-toast>
   </v-app>
 </template>
 
 <script>
+import Vue from 'vue'
+import pc from '@/superset/pc'
 import { SideBarSet } from '@/components'
+
+Vue.use(pc, { key: 'P' })
 
 export default {
   components: {
@@ -258,6 +263,10 @@ export default {
         })
       }
     })
+
+    setTimeout(() => {
+      this.$toast('success', 'fdsafsaf')
+    }, 3000)
   }
 }
 </script>
