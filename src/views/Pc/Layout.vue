@@ -263,10 +263,6 @@ export default {
         })
       }
     })
-
-    setTimeout(() => {
-      this.$toast('success', 'fdsafsaf')
-    }, 3000)
   }
 }
 </script>

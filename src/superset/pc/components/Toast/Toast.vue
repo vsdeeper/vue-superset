@@ -1,8 +1,9 @@
 <template>
   <v-snackbar
     v-model="show"
+    right
     :color="color"
-    :timeout="timeout"
+    :timeout="0"
   >
     {{ text }}
     <v-btn
@@ -27,19 +28,14 @@ export default {
     color () {
       return this.$toastStores.color
     },
-    show: {
-      get () {
-        if (this.text) {
-          return true
-        }
-        return false
-      },
-      set () {}
+    show () {
+      return this.$toastStores.show
     }
   },
   methods: {
     close () {
-      this.$toastStores.text = ''
+      this.$toastStores.show = false
+      clearTimeout(this.$toastStores.timer)
     }
   }
 }

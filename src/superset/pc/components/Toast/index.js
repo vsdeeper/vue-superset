@@ -1,9 +1,10 @@
 import Toast from './Toast.vue'
 
 const toastStores = {
-  timeout: null,
+  show: false,
   text: '',
   color: '', // success | info | error
+  timer: null,
   addText (color, text, timeout) {
     try {
       if (color !== 'success' && color !== 'info' && color !== 'error') {
@@ -11,7 +12,13 @@ const toastStores = {
       }
       this.color = color
       this.text = text
-      this.timeout = timeout || 3000
+      if (this.show) {
+        clearTimeout(this.timer)
+      }
+      this.show = true
+      this.timer = setTimeout(() => {
+        this.show = false
+      }, timeout || 3000)
     } catch (error) {
       console.error(error)
     }
