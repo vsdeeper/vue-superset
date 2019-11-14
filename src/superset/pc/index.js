@@ -3,9 +3,9 @@ import http from './http'
 import components from './components'
 
 export default {
-  install (Vue, options) {
+  install (Vue) {
     Vue.use(components)
-    Vue.use(cux, options)
-    Vue.use(http, options)
+    Vue.use(cux)
+    Vue.use(http)
   }
 }

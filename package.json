@@ -18,6 +18,7 @@
     "core-js": "^3.3.2",
     "fontmin": "^0.9.8",
     "shelljs": "^0.8.3",
+    "sweetalert2": "^9.3.6",
     "vant": "^2.2.10",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10",

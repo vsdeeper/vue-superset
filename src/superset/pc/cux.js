@@ -1,3 +1,5 @@
+import Swal from 'sweetalert2'
+
 /* ****全局交互方法
  * toast- 轻提示
  * loading- loading开始
@@ -7,57 +9,72 @@
  * asyncConfirm- 异步关闭
  */
 
+const swalConfig = {
+  buttonsStyling: false,
+  reverseButtons: true,
+  confirmButtonClass: 'md-button md-success btn-fill',
+  cancelButtonClass: 'md-button md-danger btn-fill',
+  confirmButtonText: '确定',
+  cancelButtonText: '取消'
+}
+
 const pcux = {
   lang: 'zh',
-  timeout: 5000,
   getTrans () {
     return require(`./lang/${this.lang}.json`)
-  },
-  /**
-   * 轻提示
-   * @param message 文字信息
-   */
-  toast (type, text, timeout) {
-
-  },
-  /**
-   * loading开始
-   * @param showCountDown 是否显示倒计时-Boolean-默认false
-   */
-  loading (showCountDown, countDown) {
-
-  },
-  /**
-   * loading结束
-   */
-  loadend () {
-
   },
   /**
    * 消息提示
    * @param params
    */
   alert (params) {
+    const trans = this.getTrans().cux
+    swalConfig.confirmButtonText = trans.ok
+    swalConfig.cancelButtonText = trans.cancel
 
+    return new Promise(resolve => {
+      Swal.fire({
+        ...swalConfig,
+        title: params.title || null,
+        text: params.text || null,
+        type: params.type || null, // warning | error | success | info | question
+        timer: typeof params.timer === 'undefined' ? null : params.timer,
+        /* eslint-disable no-unneeded-ternary */
+        showCancelButton: typeof params.showCancelButton === 'undefined' ? (typeof params.timer === 'undefined' ? true : false) : params.showCancelButton,
+        showConfirmButton: typeof params.showConfirmButton === 'undefined' ? (typeof params.timer === 'undefined' ? true : false) : params.showConfirmButton,
+        allowOutsideClick: typeof params.allowOutsideClick === 'undefined' ? (typeof params.timer === 'undefined' ? true : false) : params.allowOutsideClick,
+        onClose: params.onClose || null
+      }).then(result => {
+        resolve(result) // {value: true} | {dismiss: "cancel"} | {dismiss: "backdrop"}
+      })
+    })
   },
   /**
-   * 消息确认
+   * 异步操作
    * @param params
    */
-  confirm (params) {
+  asyncOperation (params) {
+    const trans = this.getTrans().cux
+    swalConfig.confirmButtonText = trans.ok
+    swalConfig.cancelButtonText = trans.cancel
 
-  },
-  /**
-   * 异步关闭
-   * @param message 消息内容
-   */
-  asyncConfirm (message) {
-
+    Swal.fire({
+      ...swalConfig,
+      title: params.title || null,
+      text: params.text || null,
+      type: params.type || null, // warning | error | success | info | question
+      input: params.input || null,
+      html: params.html || null,
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+      preConfirm: params.preConfirm
+    })
   }
 }
 
 export default {
-  install (Vue, options) {
+  install (Vue) {
     Vue.mixin({
       data () {
         return {
@@ -65,14 +82,10 @@ export default {
         }
       }
     })
-    Object.defineProperty(Vue.prototype, options && options.hasOwnProperty('key') ? `$${options.key}cux` : '$cux', {
+    Object.defineProperty(Vue.prototype, '$cux', {
       get () {
         return this.$root.pcux
       }
     })
   }
-}
-
-export {
-  pcux
 }

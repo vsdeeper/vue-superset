@@ -150,7 +150,7 @@ import Vue from 'vue'
 import pc from '@/superset/pc'
 import { SideBarSet } from '@/components'
 
-Vue.use(pc, { key: 'P' })
+Vue.use(pc)
 
 export default {
   components: {

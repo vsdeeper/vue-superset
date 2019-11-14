@@ -20,11 +20,16 @@
             <v-btn color="primary" @click="onLoading">loader效果</v-btn>
           </div>
         </v-col>
+        <v-col cols="12">
+          <div class="d-inline mx-2">
+            <v-btn color="primary" @click="onHttp">http调试</v-btn>
+          </div>
+        </v-col>
       </v-row>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="grey lighten-1">重置</v-btn>
+      <v-btn color="grey lighten-2">重置</v-btn>
       <v-btn color="success">提交</v-btn>
     </v-card-actions>
   </v-card>
@@ -46,8 +51,8 @@ export default {
     // 第4个参数-isNeedLoading（可选）-boolean-是否需要显示loading提示-默认不需要
     // 第5个参数-isCountDown（可选）-boolean-是否显示倒计时-默认不显示
     // 第6个参数-countDown（可选）-number-倒计时时长s-默认和全局超时时间配置一致
-    register (params) {
-      return this.$http.post('/demo/demoApi', 'demoApi', params)
+    demoApi (params) {
+      return this.$post('/demo/demoApi', 'demoApi', params)
     },
     onToast (type) {
       if (type === 'success') {
@@ -63,6 +68,14 @@ export default {
       setTimeout(() => {
         this.$loadend()
       }, 3000)
+    },
+    onHttp () {
+      this.demoApi({
+        phoneNumber: '15000291276',
+        verificationCode: '344333'
+      }).then(d => {
+
+      })
     }
   }
 }

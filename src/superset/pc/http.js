@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { pcux as cux } from './cux'
 import { util } from '../common/util'
 
-const phttp = {
+const phttpStores = {
   appId: '100000pc',
   lang: 'zh',
   timeout: 5000,
+  toast () {},
   onTokenTimeout: () => {},
   getTrans () {
     return require(`./lang/${this.lang}.json`)
@@ -15,14 +15,12 @@ const phttp = {
    * @param url 请求地址
    * @param action 响应名称
    * @param params 入参
-   * @param args 剩余参数【isNeedLoading-boolean-是否需要显示loading提示】【isCountDown-boolean-是否显示倒计时】【countDown-number-倒计时时长s】
+   * @param args 剩余参数
    */
   post (url, action, params, ...args) {
-    const isNeedLoading = args.length > 0 ? args[0] : false
-    const isCountDown = args.length > 1 ? args[1] : false
-    const countDown = args.length > 2 ? args[2] : this.timeout
-
+    const countDown = args.length > 2 ? args[2] : global.timeout
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
+
     return new Promise((resolve, reject) => {
       const data = {
         uuid: util.uuid(),
@@ -31,96 +29,82 @@ const phttp = {
         timestamp: new Date().getTime(),
         content: params
       }
-      if (!isNeedLoading) {
-        axios({
-          method: 'post',
-          url,
-          data
-        }).then((res) => {
-          if (res.status === 200) { // 接口通了
-            const d = res.data
-            interactionHandle(this, d)
-            resolve(d)
-          } else {
-            console.error('status:' + res.status, 'statusText:' + res.statusText)
-          }
-        }).catch((err) => {
-          reject(err)
-          catchErr(this, err.message)
-        })
-      } else {
-        const loading = cux.loading(isCountDown, countDown)
-        axios({
-          method: 'post',
-          url,
-          data
-        }).then((res) => {
-          if (res.status === 200) { // 接口通了
-            const d = res.data
-            cux.loadend().then(() => {
-              clearInterval(loading)
-              interactionHandle(this, d)
-              resolve(d)
-            })
-          } else {
-            console.error('status:' + res.status, 'statusText:' + res.statusText)
-          }
-        }).catch((err) => {
-          reject(err)
-          catchErr(this, err.message, loading)
-        })
-      }
+      axios({
+        method: 'post',
+        url,
+        data
+      }).then(res => {
+        if (res.status === 200) {
+          // 接口通了
+          const d = res.data
+          interactionHandle(this, url, d)
+          resolve(d)
+        } else {
+          /* eslint-disable no-console */
+          console.error(
+            'status:' + res.status,
+            'statusText:' + res.statusText
+          )
+        }
+      }).catch(err => {
+        reject(err)
+        catchErr(err.message)
+      })
     })
 
-    function catchErr (_this, msg, loading) {
-      const trans = _this.getTrans().http
-      if (msg.indexOf('timeout') >= 0) { // 超时处理
-        cux.toast(trans.timeout)
-      } else if (msg.indexOf('Network') >= 0) { // 网络连接失败处理
-        if (loading) {
-          cux.loadend().then(() => {
-            clearInterval(loading)
-            cux.toast(trans.networkFail)
-          })
-        } else {
-          cux.toast(trans.networkFail)
-        }
+    function catchErr (msg) {
+      if (msg.indexOf('timeout') >= 0) {
+        // 超时处理
+        this.toast('error', '请求超时')
+      } else if (msg.indexOf('Network') >= 0) {
+        // 网络连接失败处理
+        this.toast('error', '网络连接失败')
       }
     }
 
-    function interactionHandle (_this, d) {
-      const trans = _this.getTrans().http
-      if (!d.success) {
-        switch (d.errorCode) {
-          case 'TOKEN_TIME_OUT':
-            cux.alert({
-              message: trans.tokenExpired
-            }).then(() => {
-              _this.onTokenTimeout()
-            })
-            break
-          default:
-            cux.toast(d.errorMessage || d.errorCode || d.errmsg || d.errcode)
-            break
+    function interactionHandle (_this, url, d) {
+      if (typeof d.success === 'boolean') {
+        if (d.success === false) {
+          _this.toast(
+            'error',
+            d.errorMessage || d.errorCode
+          )
         }
+      } else {
+        _this.toast(
+          'error',
+          d.errmsg || d.errcode
+        )
       }
     }
   }
 }
 
 export default {
-  install (Vue, options) {
+  install (Vue) {
     Vue.mixin({
       data () {
         return {
-          phttp
+          phttpStores
+        }
+      },
+      methods: {
+        ppost (url, action, params, ...args) {
+          this.phttpStores.toast = this.$toast
+          return this.phttpStores.post(url, action, params, ...args)
         }
       }
     })
 
-    Object.defineProperty(Vue.prototype, options && options.hasOwnProperty('key') ? `$${options.key}http` : '$http', {
+    Object.defineProperty(Vue.prototype, '$http', {
       get () {
-        return this.$root.phttp
+        return this.$root.phttpStores
+      }
+    })
+
+    Object.defineProperty(Vue.prototype, '$post', {
+      get () {
+        return this.$root.ppost
       }
     })
   }
