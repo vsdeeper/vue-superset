@@ -141,6 +141,7 @@
       </v-container>
     </v-content>
     <cm-toast></cm-toast>
+    <cm-loader></cm-loader>
   </v-app>
 </template>
 

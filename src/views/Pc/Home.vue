@@ -3,13 +3,28 @@
     <v-card-title class="headline">通用交互示例</v-card-title>
     <v-card-subtitle>通用交互示例调试调试调试调试调试</v-card-subtitle>
     <v-card-text>
-      <v-btn color="primary" @click="onToast('success')">toast轻提示success</v-btn>
-      <v-btn color="primary" @click="onToast('info')">toast轻提示info</v-btn>
-      <v-btn color="primary" @click="onToast('error')">toast轻提示danger</v-btn>
+      <v-row>
+        <v-col cols="12">
+          <div class="d-inline mx-2">
+            <v-btn color="success" @click="onToast('success')">toast轻提示success</v-btn>
+          </div>
+          <div class="d-inline mx-2">
+            <v-btn color="info" @click="onToast('info')">toast轻提示info</v-btn>
+          </div>
+          <div class="d-inline mx-2">
+            <v-btn color="error" @click="onToast('error')">toast轻提示danger</v-btn>
+          </div>
+        </v-col>
+        <v-col cols="12">
+          <div class="d-inline mx-2">
+            <v-btn color="primary" @click="onLoading">loader效果</v-btn>
+          </div>
+        </v-col>
+      </v-row>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn>重置</v-btn>
+      <v-btn color="grey lighten-1">重置</v-btn>
       <v-btn color="success">提交</v-btn>
     </v-card-actions>
   </v-card>
@@ -42,6 +57,12 @@ export default {
       } else if (type === 'error') {
         this.$toast('error', '错误提示')
       }
+    },
+    onLoading () {
+      this.$loading()
+      setTimeout(() => {
+        this.$loadend()
+      }, 3000)
     }
   }
 }
