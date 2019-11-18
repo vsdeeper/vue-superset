@@ -1,5 +1,6 @@
 @import '../fonts/PingFang-SC-Light.css';
 @import './navigation.css';
+@import './swal.css';
 
 body, .v-application {
   font-family: "PingFang-SC-Light";

@@ -22,7 +22,18 @@
         </v-col>
         <v-col cols="12">
           <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onHttp">http调试</v-btn>
+            <v-btn color="primary" @click="onHttp" :loading="isSubmitting">http调试</v-btn>
+          </div>
+        </v-col>
+        <v-col cols="12">
+          <div class="d-inline mx-2">
+            <v-btn color="primary" @click="onConfirm">confirm弹出</v-btn>
+          </div>
+          <div class="d-inline mx-2">
+            <v-btn color="primary" @click="onAlert">alert弹出</v-btn>
+          </div>
+          <div class="d-inline mx-2">
+            <v-btn color="primary" @click="onSuccess">success弹出</v-btn>
           </div>
         </v-col>
       </v-row>
@@ -40,6 +51,7 @@ export default {
   name: 'home',
   data () {
     return {
+      isSubmitting: false,
       params: {
         phoneNumber: '15000291276',
         verificationCode: '333333'
@@ -70,11 +82,31 @@ export default {
       }, 3000)
     },
     onHttp () {
+      this.isSubmitting = true
       this.demoApi({
         phoneNumber: '15000291276',
         verificationCode: '344333'
       }).then(d => {
-
+        this.isSubmitting = false
+      })
+    },
+    onAlert () {
+      this.$cux.alert({
+        text: 'alert弹框',
+        showCancelButton: false
+      })
+    },
+    onConfirm () {
+      this.$cux.alert({
+        text: 'confirm弹框',
+        icon: 'question'
+      })
+    },
+    onSuccess () {
+      this.$cux.alert({
+        text: 'success弹框',
+        icon: 'success',
+        timer: 1000
       })
     }
   }

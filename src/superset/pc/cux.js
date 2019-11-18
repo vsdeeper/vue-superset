@@ -1,9 +1,6 @@
 import Swal from 'sweetalert2'
 
 /* ****全局交互方法
- * toast- 轻提示
- * loading- loading开始
- * loadend- loading结束
  * alert- 消息提示
  * confirm- 消息确认
  * asyncConfirm- 异步关闭
@@ -12,8 +9,11 @@ import Swal from 'sweetalert2'
 const swalConfig = {
   buttonsStyling: false,
   reverseButtons: true,
-  confirmButtonClass: 'md-button md-success btn-fill',
-  cancelButtonClass: 'md-button md-danger btn-fill',
+  customClass: {
+    popup: 'v-application',
+    confirmButton: 'v-btn v-btn--contained theme--light v-size--large success',
+    cancelButton: 'v-btn v-btn--contained theme--light v-size--large error'
+  },
   confirmButtonText: '确定',
   cancelButtonText: '取消'
 }
@@ -37,7 +37,7 @@ const pcux = {
         ...swalConfig,
         title: params.title || null,
         text: params.text || null,
-        type: params.type || null, // warning | error | success | info | question
+        icon: params.icon || null, // warning | error | success | info | question
         timer: typeof params.timer === 'undefined' ? null : params.timer,
         /* eslint-disable no-unneeded-ternary */
         showCancelButton: typeof params.showCancelButton === 'undefined' ? (typeof params.timer === 'undefined' ? true : false) : params.showCancelButton,
@@ -62,7 +62,7 @@ const pcux = {
       ...swalConfig,
       title: params.title || null,
       text: params.text || null,
-      type: params.type || null, // warning | error | success | info | question
+      icon: params.icon || null, // warning | error | success | info | question
       input: params.input || null,
       html: params.html || null,
       showCancelButton: true,
