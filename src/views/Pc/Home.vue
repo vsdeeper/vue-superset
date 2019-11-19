@@ -35,6 +35,9 @@
           <div class="d-inline mx-2">
             <v-btn color="primary" @click="onSuccess">success弹出</v-btn>
           </div>
+          <div class="d-inline mx-2">
+            <v-btn color="primary" @click="onAsync">异步确认弹框</v-btn>
+          </div>
         </v-col>
       </v-row>
     </v-card-text>
@@ -107,6 +110,27 @@ export default {
         text: 'success弹框',
         icon: 'success',
         timer: 1000
+      })
+    },
+    onAsync () {
+      this.$cux.asyncOperation({
+        text: '异步确认弹框',
+        icon: 'warning',
+        preConfirm: () => {
+          return this.demoApi({
+            phoneNumber: '15000291276',
+            verificationCode: '344333'
+          }).then(d => {
+            if (d.success) {
+              this.$cux.alert({
+                text: '操作成功',
+                icon: 'success',
+                timer: 1000
+              })
+            }
+            return false
+          })
+        }
       })
     }
   }
