@@ -5,14 +5,15 @@ import MobileRoutes from './mobile.routes'
 
 Vue.use(VueRouter)
 
-const routes = [
+let routes = [
   {
     path: '/',
     redirect: '/pc/home'
   },
-  PcRoutes,
   MobileRoutes
 ]
+
+routes = routes.concat(PcRoutes)
 
 const router = new VueRouter({
   routes

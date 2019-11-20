@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-navigation-drawer
       class="my-navigation-drawer"
       :class="{'display-bg-img': displayBgImg}"
@@ -171,65 +171,13 @@ export default {
       },
       {
         icon: 'mdi-account-box-multiple',
-        title: '客户管理',
+        title: '通用页面',
         active: false,
         children: [
           {
-            id: 'cl',
-            title: '客户列表',
-            path: '/pc/test'
-          }
-        ]
-      },
-      {
-        icon: 'mdi-wallet',
-        title: '入库管理',
-        active: false,
-        children: [
-          {
-            id: 'be',
-            title: '入库列表'
-          }
-        ]
-      },
-      {
-        icon: 'mdi-clipboard-text',
-        title: '订单管理',
-        active: false,
-        children: [
-          {
-            id: 'ol',
-            title: '订单列表'
-          }
-        ]
-      },
-      {
-        icon: 'mdi-truck',
-        title: '发货管理',
-        active: false,
-        children: [
-          {
-            id: 'pg',
-            title: '配卡管理'
-          },
-          {
-            id: 'wg',
-            title: '物流管理'
-          }
-        ]
-      },
-      {
-        icon: 'mdi-cash-usd',
-        title: '财务管理',
-        active: false,
-        children: [
-          {
-            id: 'sk',
-            title: '审核开票'
-          },
-          {
-            id: 'kj',
-            title: '开票记录'
+            id: 'DL',
+            title: '登录',
+            path: '/pc/login'
           }
         ]
       }

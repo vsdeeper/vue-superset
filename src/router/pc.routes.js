@@ -1,11 +1,37 @@
 import Layout from '@/views/Pc/Layout'
+import AuthLayout from '@/views/Pc/AuthLayout'
 import Home from '@/views/Pc/Home.vue'
-import Test from '@/views/Pc/Test.vue'
+import Login from '@/views/Pc/Login.vue'
 
-export default {
+const AuthRoutes = {
+  path: '/pc',
+  component: AuthLayout,
+  children: [
+    {
+      path: 'login',
+      name: 'pc端登录',
+      components: { default: Login },
+      meta: {
+        breadcrumbs: [
+          {
+            text: '通用页面',
+            disabled: false,
+            href: '#/pc/'
+          },
+          {
+            text: '登录',
+            disabled: true,
+            href: '#/pc/login'
+          }
+        ]
+      }
+    }
+  ]
+}
+
+const ExampleRoutes = {
   path: '/pc',
   component: Layout,
-  redirect: '/pc/home',
   children: [
     {
       path: 'home',
@@ -20,25 +46,17 @@ export default {
           }
         ]
       }
-    },
-    {
-      path: 'test',
-      name: 'pc端test',
-      components: { default: Test },
-      meta: {
-        breadcrumbs: [
-          {
-            text: '客户管理',
-            disabled: false,
-            href: '#/pc/'
-          },
-          {
-            text: '客户列表',
-            disabled: true,
-            href: '#/pc/test'
-          }
-        ]
-      }
     }
   ]
 }
+
+const routes = [
+  {
+    path: '/pc',
+    redirect: '/pc/home'
+  },
+  AuthRoutes,
+  ExampleRoutes
+]
+
+export default routes
