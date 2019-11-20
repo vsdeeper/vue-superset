@@ -1,52 +1,55 @@
 <template>
-  <v-card width="100%">
-    <v-card-title class="headline">通用交互示例</v-card-title>
-    <v-card-subtitle>通用交互示例调试调试调试调试调试</v-card-subtitle>
-    <v-card-text>
-      <v-row>
-        <v-col cols="12">
-          <div class="d-inline mx-2">
-            <v-btn color="success" @click="onToast('success')">toast轻提示success</v-btn>
-          </div>
-          <div class="d-inline mx-2">
-            <v-btn color="info" @click="onToast('info')">toast轻提示info</v-btn>
-          </div>
-          <div class="d-inline mx-2">
-            <v-btn color="error" @click="onToast('error')">toast轻提示danger</v-btn>
-          </div>
-        </v-col>
-        <v-col cols="12">
-          <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onLoading">loader效果</v-btn>
-          </div>
-        </v-col>
-        <v-col cols="12">
-          <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onHttp" :loading="isSubmitting">http调试</v-btn>
-          </div>
-        </v-col>
-        <v-col cols="12">
-          <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onConfirm">confirm弹出</v-btn>
-          </div>
-          <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onAlert">alert弹出</v-btn>
-          </div>
-          <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onSuccess">success弹出</v-btn>
-          </div>
-          <div class="d-inline mx-2">
-            <v-btn color="primary" @click="onAsync">异步确认弹框</v-btn>
-          </div>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="grey lighten-2">重置</v-btn>
-      <v-btn color="success">提交</v-btn>
-    </v-card-actions>
-  </v-card>
+  <div>
+    <v-breadcrumbs :items="$route.meta.breadcrumbs" divider="/" />
+    <v-card width="100%">
+      <v-card-title class="headline">通用交互示例</v-card-title>
+      <v-card-subtitle>通用交互示例调试调试调试调试调试</v-card-subtitle>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <div class="d-inline mx-2">
+              <v-btn color="success" @click="onToast('success')">toast轻提示success</v-btn>
+            </div>
+            <div class="d-inline mx-2">
+              <v-btn color="info" @click="onToast('info')">toast轻提示info</v-btn>
+            </div>
+            <div class="d-inline mx-2">
+              <v-btn color="error" @click="onToast('error')">toast轻提示danger</v-btn>
+            </div>
+          </v-col>
+          <v-col cols="12">
+            <div class="d-inline mx-2">
+              <v-btn color="primary" @click="onLoading">loader效果</v-btn>
+            </div>
+          </v-col>
+          <v-col cols="12">
+            <div class="d-inline mx-2">
+              <v-btn color="primary" @click="onHttp" :loading="isSubmitting">http调试</v-btn>
+            </div>
+          </v-col>
+          <v-col cols="12">
+            <div class="d-inline mx-2">
+              <v-btn color="primary" @click="onConfirm">confirm弹出</v-btn>
+            </div>
+            <div class="d-inline mx-2">
+              <v-btn color="primary" @click="onAlert">alert弹出</v-btn>
+            </div>
+            <div class="d-inline mx-2">
+              <v-btn color="primary" @click="onSuccess">success弹出</v-btn>
+            </div>
+            <div class="d-inline mx-2">
+              <v-btn color="primary" @click="onAsync">异步确认弹框</v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="grey lighten-2">重置</v-btn>
+        <v-btn color="success">提交</v-btn>
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script>
