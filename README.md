@@ -113,7 +113,23 @@ mobile- 主要针对移动端的集合，第三方基础依赖：vant，axios
     timeout- 超时配置（ms），默认 5000，务必和 cux-timeout 保持一致
     onTokenTimeout- 登录失效（token）的回调逻辑配置
     post- post请求方法
+```
 
+```
+pc- 主要针对pc端的集合，定位开发后管平台，第三方基础依赖：vuetify，sweetalert2，vee-validate，axios
+  cux- 常用交互反馈
+    lang- 语言设置，支持zh/en
+    alert- 弹框提示和确认框统一
+    asyncConfirm- 异步确认框
+
+  filters- 全局过滤器
+    errorMsg- vee-validate校验错误提示信息方法
+
+  http- 接口交互方法配置
+    appId- 应用id配置
+    lang- 语言设置，支持zh/en
+    timeout- 超时配置（ms），默认 5000，务必和 cux-timeout 保持一致
+    onTokenTimeout- 登录失效（token）的回调逻辑配置
 ```
 
 
@@ -123,7 +139,7 @@ mobile- 主要针对移动端的集合，第三方基础依赖：vant，axios
 npm i vue-superset --save
 ```
 
-#### ##mobile移动端
+#### ##mobile端
 
 main.js中引入：
 
@@ -137,9 +153,9 @@ Vue.use(common)
 Vue.use(mobile)
 ```
 
-#### ##使用说明
+#### ##使用说明-mobile端
 
-引入后，产生Vue全局变量：$util, $pattern, $cux, $http
+引入后，产生Vue全局变量：$util, $pattern, $cux, $http，$facebook
 
 调用示例：
 ```
@@ -148,8 +164,38 @@ this.$cux.toast('轻提示')
 this.$http.post(url, action, params, ...args)
 ```
 
+#### ##pc端
+
+main.js中引入：
+
+```
+import common from 'vue-superset/common'
+import mobile from 'vue-superset/pc'
+
+...
+
+Vue.use(common)
+Vue.use(pc)
+```
+
+#### ##使用说明-pc端
+
+引入后，产生Vue全局变量：$util, $pattern, $cux, $http，$facebook
+
+相对于mobile端的不同：
+cux集合中的toast，loading，loadend方法提出来作为全局变量$toast，$loading，$loadend
+http集合中post方法提出来作为全局变量$post
+
+调用示例：
+```
+this.$util.uuid()
+this.$toast('success', '轻提示')  // success | info | error
+this.$post(url, action, params, ...args)
+```
+
 ### #附录
 涉及到第三方插件的使用，统一来源：
 
 * [日期处理类库](https://github.com/moment/moment/)
 * [涉及频率限制的工具库](https://github.com/lodash/lodash)
+* [表单校验工具](https://logaretm.github.io/vee-validate)

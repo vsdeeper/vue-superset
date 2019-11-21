@@ -3,6 +3,7 @@ node_modules
 /dist
 /common
 /mobile
+/pc
 
 # local env files
 .env.local
