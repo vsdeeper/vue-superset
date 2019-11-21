@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import ImgVerifyCode from '@/superset/pc/components/ImgVerifyCode'
+import { ImgVerifyCode } from '@/superset/pc/components'
 import { extend } from 'vee-validate'
 import { required, max } from 'vee-validate/dist/rules'
 
