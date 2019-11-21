@@ -17,7 +17,7 @@ export default {
     },
     fontSizeMax: { // 字体最大值
       type: Number,
-      default: 30
+      default: 28
     },
     backgroundColorMin: { // 验证码图片背景色最小值
       type: Number,
@@ -37,11 +37,11 @@ export default {
     },
     contentWidth: { // 容器宽度
       type: Number,
-      default: 86
+      default: 85
     },
     contentHeight: { // 容器高度
       type: Number,
-      default: 32
+      default: 28
     }
   },
   methods: {
