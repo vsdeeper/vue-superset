@@ -147,10 +147,13 @@
 
 <script>
 import Vue from 'vue'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import pc from '@/superset/pc'
 import { SideBarSet } from '@/components'
 
 Vue.use(pc)
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
 
 export default {
   components: {
