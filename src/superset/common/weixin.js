@@ -1,4 +1,4 @@
-const weixinStorage = {
+export default {
   /**
    * 微信公众号授权
    * @params { appid, authorizeUrl, thirdPartyAppid, query: {} }
@@ -15,22 +15,5 @@ const weixinStorage = {
       '&response_type=code&scope=snsapi_userinfo&state=' + query + 
       '&component_appid=' + params.thirdPartyAppid + '#wechat_redirect'
     )
-  }
-}
-
-export default {
-  install (Vue) {
-    Vue.mixin({
-      data () {
-        return {
-          weixinStorage
-        }
-      }
-    })
-    Object.defineProperty(Vue.prototype, '$weixin', {
-      get () {
-        return this.$root.weixinStorage
-      }
-    })
   }
 }

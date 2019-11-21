@@ -10,6 +10,9 @@ export default {
     Vue.use(pattern)
     Vue.use(filters)
     Vue.use(facebook)
-    Vue.use(weixin)
   }
+}
+
+export {
+  weixin
 }
