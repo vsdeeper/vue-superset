@@ -9,7 +9,7 @@ import { Toast, Dialog } from 'vant'
  * asyncConfirm- 异步关闭
  */
 
-const cux = {
+const mcux = {
   lang: 'zh',
   timeout: 5000,
   getTrans () {
@@ -131,22 +131,22 @@ const cux = {
 }
 
 export default {
-  install (Vue) {
+  install (Vue, options) {
     Vue.mixin({
       data () {
         return {
-          cux
+          mcux
         }
       }
     })
-    Object.defineProperty(Vue.prototype, '$cux', {
+    Object.defineProperty(Vue.prototype, options && options.hasOwnProperty('key') ? `$${options.key}cux` : '$cux', {
       get () {
-        return this.$root.cux
+        return this.$root.mcux
       }
     })
   }
 }
 
 export {
-  cux
+  mcux
 }

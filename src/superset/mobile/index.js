@@ -2,8 +2,8 @@ import cux from './cux'
 import http from './http'
 
 export default {
-  install (Vue) {
-    Vue.use(cux)
-    Vue.use(http)
+  install (Vue, options) {
+    Vue.use(cux, options)
+    Vue.use(http, options)
   }
 }

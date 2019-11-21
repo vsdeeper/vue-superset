@@ -1,0 +1,8 @@
+.swal2-actions button {
+  margin: 0 5px;
+}
+.swal2-actions.swal2-loading :not(.swal2-styled).swal2-confirm::after {
+  box-shadow: unset;
+  border-width: 1px;
+  border-color: #fff transparent #fff #fff;
+}

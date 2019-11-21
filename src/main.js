@@ -3,18 +3,24 @@ import Vant from 'vant'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import AxiosConfig from '../axios.config'
+import axiosConfig from '../axios.config'
 import common from './superset/common'
-import mobile from './superset/mobile'
-import 'vant/lib/index.css'
 import vuetify from './plugins/vuetify'
+import 'vant/lib/index.css'
+import './assets/css/common.css'
 
 Vue.config.productionTip = false
 
 Vue.use(Vant)
-Vue.use(AxiosConfig)
+Vue.use(axiosConfig)
 Vue.use(common)
-Vue.use(mobile)
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
 
 new Vue({
   router,

@@ -1,0 +1,78 @@
+.v-navigation-drawer--mini-variant .v-list-group--no-action .v-list-group__items,
+.v-navigation-drawer--mini-variant .v-list-group--sub-group {
+  display: block;
+}
+.v-application--is-ltr .v-list-group--no-action > .v-list-group__items > div > .v-list-item {
+  padding-left: 10px;
+}
+.v-list-item__action > .text-uppercase {
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 0;
+  text-align: center;
+}
+.v-navigation-drawer {
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+.v-navigation-drawer--mini-variant .v-list-item {
+  justify-content: flex-start;
+}
+
+.my-navigation-drawer .v-list-item {
+  padding: 0 10px;
+}
+.my-navigation-drawer .avatar-group .v-list-group__header {
+  padding: 0 17px;
+}
+.my-navigation-drawer .avatar-group .v-list-group__items .v-list-item {
+  padding: 0 24px !important;
+}
+
+.my-navigation-drawer .avatar-group .v-list-group__items .v-list-item__title {
+  font-size: 0.8125rem;
+}
+.my-navigation-drawer .v-list--rounded {
+  padding-left: 14px;
+  padding-right: 15px;
+}
+
+.my-navigation-drawer .v-list--rounded .v-list-item,
+.my-navigation-drawer .v-list--rounded .v-list-item:before,
+.my-navigation-drawer .v-list--rounded .v-ripple__container {
+  border-radius: 3px !important;
+}
+.my-navigation-drawer .v-list-item--dense,
+.my-navigation-drawer .v-list--dense .v-list-item {
+  height: 40px;
+}
+.my-navigation-drawer .v-list .v-list-item--active {
+  box-shadow: 0 12px 20px -10px rgba(76, 175, 80, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(76, 175, 80, 0.2);
+}
+.my-navigation-drawer .v-list .v-list-item--active.v-list-group__header {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: unset;
+}
+.my-navigation-drawer .v-list .avatar-group .v-list-item--active.v-list-group__header {
+  background-color: transparent;
+}
+.my-navigation-drawer .theme--dark.v-list-item--active:hover::before {
+  opacity: 0.1;
+}
+.my-navigation-drawer .theme--dark.v-list-item--active::before {
+  opacity: 0;
+}
+.my-navigation-drawer .v-list-group {
+  margin-bottom: 12px;
+}
+.my-navigation-drawer .v-list-group.avatar-group {
+  margin-bottom: 0;
+}
+.my-navigation-drawer .v-list--rounded.v-list--dense .v-list-item:not(:last-child):not(:only-child) {
+  margin-bottom: 12px;
+}
+.my-navigation-drawer .v-navigation-drawer__image {
+  opacity: 0;
+}
+.my-navigation-drawer.display-bg-img .v-navigation-drawer__image {
+  opacity: 0.25;
+}

@@ -1,6 +1,6 @@
-###  基于vue框架技术的超集合
+###  #基于vue框架技术的超集合
 
-* 经过众多移动端和PC端项目的实践，以作者所在公司项目的特点而创建
+* 经过众多移动端和PC端项目的实践，以本人所在公司项目的特点而创建
 * 主要为方便前端通用代码块的统一维护和更新，目前包含common和mobile两个模块集合
 * 想要作为自己公司项目的依赖来开发的，请谨慎使用
 
@@ -117,13 +117,13 @@ mobile- 主要针对移动端的集合，第三方基础依赖：vant，axios
 ```
 
 
-### 安装使用
+### #安装使用
 
 ```
 npm i vue-superset --save
 ```
 
-#### mobile移动端
+#### ##mobile移动端
 
 main.js中引入：
 
@@ -137,7 +137,7 @@ Vue.use(common)
 Vue.use(mobile)
 ```
 
-#### 使用说明
+#### ##使用说明
 
 引入后，产生Vue全局变量：$util, $pattern, $cux, $http
 
@@ -148,7 +148,7 @@ this.$cux.toast('轻提示')
 this.$http.post(url, action, params, ...args)
 ```
 
-### 附录
+### #附录
 涉及到第三方插件的使用，统一来源：
 
 * [日期处理类库](https://github.com/moment/moment/)

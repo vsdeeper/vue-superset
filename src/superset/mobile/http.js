@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { cux } from './cux'
+import { mcux as cux } from './cux'
 import { util } from '../common/util'
 
-const http = {
-  appId: '100000',
+const mhttp = {
+  appId: '100000mobile',
   lang: 'zh',
   timeout: 5000,
   onTokenTimeout: () => {},
@@ -109,17 +109,18 @@ const http = {
 }
 
 export default {
-  install (Vue) {
+  install (Vue, options) {
     Vue.mixin({
       data () {
         return {
-          http
+          mhttp
         }
       }
     })
-    Object.defineProperty(Vue.prototype, '$http', {
+
+    Object.defineProperty(Vue.prototype, options && options.hasOwnProperty('key') ? `$${options.key}http` : '$http', {
       get () {
-        return this.$root.http
+        return this.$root.mhttp
       }
     })
   }
