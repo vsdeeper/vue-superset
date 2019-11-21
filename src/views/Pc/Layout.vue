@@ -29,7 +29,7 @@
               </v-list-item-content>
             </template>
 
-            <v-list-item link>
+            <v-list-item link to="/pc/login">
               <v-list-item-action>
                 <v-icon>mdi-logout-variant</v-icon>
               </v-list-item-action>
