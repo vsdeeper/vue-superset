@@ -40,6 +40,9 @@ common- 无任何依赖通用模块
     loadSdk- 加载sdk
     checkFB- 检测window对象中FB对象的初始化完成
 
+  weixin- 常用微信功能方法，只适用于微信中，按需引用，如：import { weixin } from 'vue-superset/common'
+    authorize- 微信公众号授权
+
   pattern- 常用正则集合
     sum- 金额：可以为0，第一位不能为0，小数位不超过2位
     discount- 折扣：0-10之间的数字，不等于临界值，小数位不超过2位
