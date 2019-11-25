@@ -103,18 +103,22 @@ const mcux = {
         resolve()
       }).catch(err => {
         // on cancel
-        console.error(err)
+        // console.error(err)
       })
     })
   },
   /**
    * 异步关闭
-   * @param message 消息内容
+   * @param params
    */
-  asyncConfirm (message) {
+  asyncConfirm (params) {
     return new Promise(resolve => {
+      const trans = this.getTrans().cux
       Dialog.confirm({
-        message,
+        message: params.message || '',
+        cancelButtonText: params.cancelButtonText || trans.cancel,
+        confirmButtonText: params.confirmButtonText || trans.ok,
+        closeOnClickOverlay: true,
         beforeClose (action, done) {
           if (action === 'confirm') {
             resolve(done)
@@ -124,7 +128,7 @@ const mcux = {
         }
       }).catch(err => {
         // on cancel
-        console.error(err)
+        // console.error(err)
       })
     })
   }
