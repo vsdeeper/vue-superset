@@ -149,6 +149,7 @@
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import pc from '@/superset/pc'
+import { custom } from '@/superset/config'
 import { SideBarSet } from '@/components'
 
 Vue.use(pc)
@@ -204,6 +205,10 @@ export default {
     }
   },
   created () {
+    custom.config = {
+      appId: '64e6',
+      lang: 'en'
+    }
     this.$store.commit('destroyVconsole')
     const path = this.$route.path
     this.items.find(ele1 => {

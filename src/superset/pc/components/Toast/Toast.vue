@@ -10,14 +10,23 @@
       text
       @click="close"
     >
-      关闭
+      {{trans.toast.close}}
     </v-btn>
   </v-snackbar>
 </template>
+
 <script>
+import getConfig from '../../../config'
+
 export default {
   name: 'Toast',
   computed: {
+    lang () {
+      return getConfig().lang
+    },
+    trans () {
+      return require(`../../../lang/${this.lang}.json`)
+    },
     timeout () {
       return this.$toastStores.timeout
     },

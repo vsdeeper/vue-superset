@@ -1,3 +1,8 @@
+import getConfig from '../config'
+
+const config = getConfig()
+const trans = require(`../lang/${config.lang}.json`)
+
 export default {
   install (Vue) {
     /**
@@ -83,11 +88,12 @@ export default {
           if (typeof todayOrYesterday !== 'boolean') {
             throw new Error('dateFormat: 参数{todayOrYesterday}必须为Boolean类型')
           }
+
           if (today === myday) {
-            myday = '今天'
+            myday = trans['common'].today
           }
           if (yesterday === myday) {
-            myday = '昨天'
+            myday = trans['common'].tomorrow
           }
         }
 

@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { mcux as cux } from './cux'
 import { util } from '../common/util'
+import getConfig from '../config'
 
 const mhttp = {
-  appId: '100000mobile',
-  lang: 'zh',
-  timeout: 5000,
   onTokenTimeout: () => {},
   getTrans () {
-    return require(`./lang/${this.lang}.json`)
+    const config = getConfig()
+    return require(`../lang/${config.lang}.json`)
   },
   /**
    * post请求
@@ -20,13 +19,14 @@ const mhttp = {
   post (url, action, params, ...args) {
     const isNeedLoading = args.length > 0 ? args[0] : false
     const isCountDown = args.length > 1 ? args[1] : false
-    const countDown = args.length > 2 ? args[2] : this.timeout
+    const countDown = args.length > 2 ? args[2] : getConfig().timeout
 
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
     return new Promise((resolve, reject) => {
+      const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
       const data = {
-        uuid: util.uuid(),
-        appId: this.appId,
+        uuid: today + '-' + util.uuid(),
+        appId: getConfig().appId,
         action,
         timestamp: new Date().getTime(),
         content: params

@@ -10,7 +10,7 @@
       dark
     >
       <v-card-text>
-        请等待...
+        {{trans.loader.wait}}
         <v-progress-linear
           indeterminate
           color="white"
@@ -22,8 +22,16 @@
 </template>
 
 <script>
+import getConfig from '../../../config'
+
 export default {
   computed: {
+    lang () {
+      return getConfig().lang
+    },
+    trans () {
+      return require(`../../../lang/${this.lang}.json`)
+    },
     color () {
       return this.$loaderStores.color
     },

@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { util } from '../common/util'
+import getConfig from '../config'
 
 const phttpStores = {
-  appId: '100000pc',
-  lang: 'zh',
-  timeout: 5000,
   toast () {},
   onTokenTimeout: () => {},
   getTrans () {
-    return require(`./lang/${this.lang}.json`)
+    const config = getConfig()
+    return require(`../lang/${config.lang}.json`)
   },
   /**
    * post请求
@@ -18,13 +17,14 @@ const phttpStores = {
    * @param args 剩余参数
    */
   post (url, action, params, ...args) {
-    const countDown = args.length > 2 ? args[2] : global.timeout
+    const countDown = args.length > 2 ? args[2] : getConfig().timeout
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
 
     return new Promise((resolve, reject) => {
+      const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
       const data = {
-        uuid: util.uuid(),
-        appId: this.appId,
+        uuid: today + '-' + util.uuid(),
+        appId: getConfig().appId,
         action,
         timestamp: new Date().getTime(),
         content: params

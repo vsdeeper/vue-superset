@@ -136,6 +136,9 @@ export default {
         }
       })
     }
+  },
+  created () {
+    console.log(this.$util.dateFormat(Number(new Date())))
   }
 }
 </script>
