@@ -40,15 +40,15 @@ export default {
 .image-wrap {
   display: inline-block;
   position: relative;
-  width: 143px;
-  height: 195px;
+  width: 136px;
+  height: 157px;
   margin: 50px;
-  transform: scale(0.75);
+  // transform: scale(0.75);
   overflow: hidden;
   img.bevel {
     position: absolute;
-    bottom: 195px;
-    right: 143px;
+    bottom: 136px;
+    right: 157px;
     width: 180%;
     z-index: 3;
     animation: ccc 0.5s ease-in-out 3s;
@@ -59,18 +59,15 @@ export default {
   left: 0;
   top: 0;
   &.silent {
-    z-index: 3;
-    background-color: #fff;
+    z-index: 4;
   }
   &.start {
     z-index: 2;
-    clip-path: ellipse(143px 183px at -100% -120%);
+    clip-path: ellipse(136px 157px at -70% -80%);
     animation: aaa 0.5s ease-in-out 3s;
-    background-color: #fff;
   }
   &.end {
     z-index: 1;
-    background-color: #fff;
   }
   .mask {
     position: absolute;
@@ -87,16 +84,16 @@ export default {
 }
 @keyframes aaa {
   0% {
-    clip-path: ellipse(143px 183px at 13% 28%);
+    clip-path: ellipse(136px 157px at 27% 30%);
   }
   70% {
-    clip-path: ellipse(143px 183px at 1% 10%);
+    clip-path: ellipse(136px 157px at 0% 5%);
   }
   85% {
-    clip-path: ellipse(143px 183px at -16% -23%);
+    clip-path: ellipse(136px 157px at -22% -34%);
   }
   100% {
-    clip-path: ellipse(143px 183px at -100% -120%);
+    clip-path: ellipse(136px 157px at -70% -80%);
   }
 }
 @keyframes bbb {
@@ -111,7 +108,7 @@ export default {
   0% {
     bottom: 0;
     right: 0;
-    width: 30%;
+    width: 0%;
   }
   70% {
     bottom: 0;
@@ -124,8 +121,8 @@ export default {
     width: 150%;
   }
   100% {
-    bottom: 195px;
-    right: 143px;
+    bottom: 136px;
+    right: 157px;
     width: 180%;
   }
 }
