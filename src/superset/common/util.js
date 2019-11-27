@@ -21,6 +21,7 @@
  * clone- 克隆对象
  * base64Encode- base64编码
  * base64Decode- base64解码
+ * storageUsageRate- 可使用存储空间的使用比例
  */
 import getConfig from '../config'
 
@@ -417,6 +418,17 @@ const util = {
   base64Decode (obj) {
     obj = window.atob(obj)
     return JSON.parse(decodeURIComponent(obj))
+  },
+  /**
+   * 可使用存储空间的使用比例
+   */
+  storageUsageRate () {
+    return new Promise(resolve => {
+      navigator.storage.estimate().then(estimate => {
+        const rate = (estimate.usage / estimate.quota * 100).toFixed(2)
+        resolve(rate)
+      })
+    })
   }
 }
 
