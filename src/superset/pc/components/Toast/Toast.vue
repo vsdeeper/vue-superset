@@ -3,6 +3,8 @@
     v-model="show"
     :color="color"
     :timeout="0"
+    right
+    bottom
   >
     {{ text }}
     <v-btn
