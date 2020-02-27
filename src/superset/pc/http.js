@@ -17,10 +17,10 @@ const phttpStores = {
    * @param args 剩余参数
    */
   post (url, action, params, ...args) {
-    const countDown = args.length > 2 ? args[2] : getConfig().timeout
+    const countDown = args.length > 0 ? args[0] : getConfig().timeout
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
       const data = {
         uuid: today + '-' + util.uuid(),
@@ -47,18 +47,18 @@ const phttpStores = {
           )
         }
       }).catch(err => {
-        reject(err)
-        catchErr(err.message)
+        resolve({})
+        catchErr(this, err.message)
       })
     })
 
-    function catchErr (msg) {
+    function catchErr (_this, msg) {
       if (msg.indexOf('timeout') >= 0) {
         // 超时处理
-        this.toast('error', '请求超时')
+        _this.toast('error', '请求超时')
       } else if (msg.indexOf('Network') >= 0) {
         // 网络连接失败处理
-        this.toast('error', '网络连接失败')
+        _this.toast('error', '网络连接失败')
       }
     }
 

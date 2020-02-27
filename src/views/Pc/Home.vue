@@ -66,11 +66,9 @@ export default {
   },
   methods: {
     // 接口封装示例
-    // 第4个参数-isNeedLoading（可选）-boolean-是否需要显示loading提示-默认不需要
-    // 第5个参数-isCountDown（可选）-boolean-是否显示倒计时-默认不显示
-    // 第6个参数-countDown（可选）-number-倒计时时长s-默认和全局超时时间配置一致
+    // 第4个参数-timeout-number-超时时间ms-默认和全局超时时间配置一致
     demoApi (params) {
-      return this.$post('/demo/demoApi', 'demoApi', params)
+      return this.$post('/demo/demoApi', 'demoApi', params, 2000)
     },
     onToast (type) {
       if (type === 'success') {

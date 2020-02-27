@@ -22,7 +22,7 @@ const mhttp = {
     const countDown = args.length > 2 ? args[2] : getConfig().timeout
 
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
       const data = {
         uuid: today + '-' + util.uuid(),
@@ -45,7 +45,7 @@ const mhttp = {
             console.error('status:' + res.status, 'statusText:' + res.statusText)
           }
         }).catch((err) => {
-          reject(err)
+          resolve({})
           catchErr(this, err.message)
         })
       } else {
@@ -66,7 +66,7 @@ const mhttp = {
             console.error('status:' + res.status, 'statusText:' + res.statusText)
           }
         }).catch((err) => {
-          reject(err)
+          resolve({})
           catchErr(this, err.message, loading)
         })
       }
