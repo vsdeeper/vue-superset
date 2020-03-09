@@ -37,7 +37,7 @@ const phttpStores = {
         if (res.status === 200) {
           // 接口通了
           const d = res.data
-          interactionHandle(this, url, d)
+          interactionHandle(this, d)
           resolve(d)
         } else {
           /* eslint-disable no-console */
@@ -62,7 +62,7 @@ const phttpStores = {
       }
     }
 
-    function interactionHandle (_this, url, d) {
+    function interactionHandle (_this, d) {
       if (typeof d.success === 'boolean') {
         if (d.success === false) {
           _this.toast(
@@ -90,9 +90,11 @@ export default {
       },
       methods: {
         ppost (url, action, params, ...args) {
-          this.phttpStores.toast = this.$toast
           return this.phttpStores.post(url, action, params, ...args)
         }
+      },
+      created () {
+        this.phttpStores.toast = this.$toast
       }
     })
 
