@@ -22,6 +22,7 @@
  * base64Encode- base64编码
  * base64Decode- base64解码
  * storageUsageRate- 可使用存储空间的使用比例
+ * windowOpen- 打开浏览器窗口
  */
 import getConfig from '../config'
 
@@ -429,6 +430,14 @@ const util = {
         resolve(rate)
       })
     })
+  },
+  /*
+   * 打开浏览器窗口
+   * @url 指定的页面的URL
+   * @target 指定target属性或窗口的名称  _blank _parent _self _top
+  */
+  windowOpen (url, target) {
+    window.open(url, target || '_blank')
   }
 }
 
