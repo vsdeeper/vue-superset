@@ -53,7 +53,7 @@ export default {
           }
         }
       } else {
-        return '——'
+        return '--'
       }
     })
     /**
@@ -65,6 +65,9 @@ export default {
      */
     Vue.filter('dateFormat', function (timestamp, type, sr, todayOrYesterday) {
       try {
+        if (typeof timestamp === 'undefined') {
+          return '--'
+        }
         if (typeof timestamp !== 'number') {
           throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
         }
