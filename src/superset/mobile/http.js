@@ -46,8 +46,10 @@ const mhttp = {
             console.error('status:' + res.status, 'statusText:' + res.statusText)
           }
         }).catch((err) => {
+          console.error(err)
           catchErr(this, err.message, false, isToast).then((errorMessage) => {
             resolve({
+              success: false,
               errorMessage
             })
           })
@@ -70,8 +72,10 @@ const mhttp = {
             console.error('status:' + res.status, 'statusText:' + res.statusText)
           }
         }).catch((err) => {
+          console.error(err)
           catchErr(this, err.message, loading, isToast).then((errorMessage) => {
             resolve({
+              success: false,
               errorMessage
             })
           })

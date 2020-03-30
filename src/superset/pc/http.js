@@ -47,7 +47,17 @@ const phttpStores = {
           )
         }
       }).catch(err => {
-        resolve({})
+        const msg = err.message
+        let errorMessage
+        if (msg.indexOf('timeout') >= 0) {
+          errorMessage = '请求超时'
+        } else if (msg.indexOf('Network') >= 0) {
+          errorMessage = '网络连接失败'
+        }
+        resolve({
+          success: false,
+          errorMessage
+        })
         catchErr(this, err.message)
       })
     })
