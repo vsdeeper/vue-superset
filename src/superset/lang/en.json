@@ -1,4 +1,8 @@
 {
+  "common": {
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
   "cux": {
     "loadingA": "Please wait {second} second...",
     "loadingB": "Please wait...",
@@ -9,5 +13,11 @@
     "timeout": "Request timed out, please try again later",
     "networkFail": "Network connection failed",
     "tokenExpired": "Login has expired"
+  },
+  "toast": {
+    "close": "Close"
+  },
+  "loader": {
+    "wait": "Please wait..."
   }
 }

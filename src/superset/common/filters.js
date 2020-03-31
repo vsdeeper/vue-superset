@@ -1,3 +1,8 @@
+import getConfig from '../config'
+
+const config = getConfig()
+const trans = require(`../lang/${config.lang}.json`)
+
 export default {
   install (Vue) {
     /**
@@ -48,7 +53,7 @@ export default {
           }
         }
       } else {
-        return '——'
+        return '--'
       }
     })
     /**
@@ -60,6 +65,9 @@ export default {
      */
     Vue.filter('dateFormat', function (timestamp, type, sr, todayOrYesterday) {
       try {
+        if (typeof timestamp === 'undefined') {
+          return '--'
+        }
         if (typeof timestamp !== 'number') {
           throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
         }
@@ -83,11 +91,12 @@ export default {
           if (typeof todayOrYesterday !== 'boolean') {
             throw new Error('dateFormat: 参数{todayOrYesterday}必须为Boolean类型')
           }
+
           if (today === myday) {
-            myday = '今天'
+            myday = trans['common'].today
           }
           if (yesterday === myday) {
-            myday = '昨天'
+            myday = trans['common'].tomorrow
           }
         }
 

@@ -5,7 +5,7 @@ export default {
    * appid- 需要得到用户授权的公众号appid
    * authorizeUrl- 跳转到后端提供的授权地址
    * thirdPartyAppid- 第三方平台的appid
-   * query- 将前端需要的组装储存以便于授权回跳能够拿得到，如{ activityId, productId }
+   * query- 将前端需要的组装储存以便于授权回跳能够拿得到，如{ activityId: 434, productId: 4343 }
    */
   authorize (params) {
     const query = params.query ? JSON.stringify(params.query) : JSON.stringify({})

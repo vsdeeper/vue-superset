@@ -1,4 +1,5 @@
 import { Toast, Dialog } from 'vant'
+import getConfig from '../config'
 
 /* ****全局交互方法
  * toast- 轻提示
@@ -10,10 +11,9 @@ import { Toast, Dialog } from 'vant'
  */
 
 const mcux = {
-  lang: 'zh',
-  timeout: 5000,
   getTrans () {
-    return require(`./lang/${this.lang}.json`)
+    const config = getConfig()
+    return require(`../lang/${config.lang}.json`)
   },
   /**
    * 轻提示
@@ -33,7 +33,7 @@ const mcux = {
     const trans = this.getTrans().cux
     let timer
     const _showCountDown = typeof showCountDown === 'undefined' ? false : showCountDown
-    const _countDown = typeof countDown === 'undefined' ? this.timeout : countDown
+    const _countDown = typeof countDown === 'undefined' ? getConfig().timeout : countDown
     let second = _countDown / 1000 // 倒计时秒数，需和axios超时时间配置一致
 
     const toast = Toast.loading({
@@ -103,18 +103,22 @@ const mcux = {
         resolve()
       }).catch(err => {
         // on cancel
-        console.error(err)
+        // console.error(err)
       })
     })
   },
   /**
    * 异步关闭
-   * @param message 消息内容
+   * @param params
    */
-  asyncConfirm (message) {
+  asyncConfirm (params) {
     return new Promise(resolve => {
+      const trans = this.getTrans().cux
       Dialog.confirm({
-        message,
+        message: params.message || '',
+        cancelButtonText: params.cancelButtonText || trans.cancel,
+        confirmButtonText: params.confirmButtonText || trans.ok,
+        closeOnClickOverlay: true,
         beforeClose (action, done) {
           if (action === 'confirm') {
             resolve(done)
@@ -124,7 +128,7 @@ const mcux = {
         }
       }).catch(err => {
         // on cancel
-        console.error(err)
+        // console.error(err)
       })
     })
   }

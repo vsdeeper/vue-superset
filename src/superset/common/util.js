@@ -21,9 +21,16 @@
  * clone- 克隆对象
  * base64Encode- base64编码
  * base64Decode- base64解码
+ * storageUsageRate- 可使用存储空间的使用比例
+ * windowOpen- 打开浏览器窗口
  */
+import getConfig from '../config'
 
 const util = {
+  getTrans () {
+    const config = getConfig()
+    return require(`../lang/${config.lang}.json`)
+  },
   /**
    * 生成uuid
    */
@@ -179,7 +186,7 @@ const util = {
   dateFormat (timestamp, type, sr, todayOrYesterday) {
     try {
       if (typeof timestamp !== 'number') {
-        throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
+        throw new Error('dateFormat: {timestamp}必须为Number类型')
       }
 
       const date = new Date(timestamp)
@@ -192,45 +199,41 @@ const util = {
 
       const td = new Date()
       const yd = new Date((new Date()).setDate(td.getDate() - 1))
-      const today = [td.getFullYear(), td.getMonth() + 1, td.getDate()].map(zeroFill).join(sr || '-')
-      const yesterday = [yd.getFullYear(), yd.getMonth() + 1, yd.getDate()].map(zeroFill).join(sr || '-')
+      const today = [td.getFullYear(), td.getMonth() + 1, td.getDate()].map(this.zeroFill).join(sr || '-')
+      const yesterday = [yd.getFullYear(), yd.getMonth() + 1, yd.getDate()].map(this.zeroFill).join(sr || '-')
 
-      let myday = [year, month, day].map(zeroFill).join(sr || '-')
+      let myday = [year, month, day].map(this.zeroFill).join(sr || '-')
 
       if (typeof todayOrYesterday !== 'undefined') {
         if (typeof todayOrYesterday !== 'boolean') {
-          throw new Error('dateFormat: 参数{todayOrYesterday}必须为Boolean类型')
+          throw new Error('dateFormat: {todayOrYesterday}必须为Boolean类型')
         }
+        const trans = this.getTrans()['common']
         if (today === myday) {
-          myday = '今天'
+          myday = trans.today
         }
         if (yesterday === myday) {
-          myday = '昨天'
+          myday = trans.tomorrow
         }
       }
 
       if (typeof type !== 'undefined') {
         if (type !== 'day' && type !== 'minute' && type !== 'second') {
-          throw new Error('dateFormat: 参数{type}必须为day、minute、second中的一个')
+          throw new Error('dateFormat: {type}必须为day、minute、second中的一个')
         }
       }
 
       if (type === 'day') {
         return myday
       } else if (type === 'minute') {
-        return myday + ' ' + [hour, minute].map(zeroFill).join(':')
+        return myday + ' ' + [hour, minute].map(this.zeroFill).join(':')
       } else if (type === 'second') {
-        return myday + ' ' + [hour, minute, second].map(zeroFill).join(':')
+        return myday + ' ' + [hour, minute, second].map(this.zeroFill).join(':')
       } else {
         return myday
       }
     } catch (error) {
       console.error(error)
-    }
-
-    function zeroFill (num) {
-      num = num.toString()
-      return num[1] ? num : '0' + num
     }
   },
   /**
@@ -416,6 +419,25 @@ const util = {
   base64Decode (obj) {
     obj = window.atob(obj)
     return JSON.parse(decodeURIComponent(obj))
+  },
+  /**
+   * 可使用存储空间的使用比例
+   */
+  storageUsageRate () {
+    return new Promise(resolve => {
+      navigator.storage.estimate().then(estimate => {
+        const rate = (estimate.usage / estimate.quota * 100).toFixed(2)
+        resolve(rate)
+      })
+    })
+  },
+  /*
+   * 打开浏览器窗口
+   * @url 指定的页面的URL
+   * @target 指定target属性或窗口的名称  _blank _parent _self _top
+  */
+  windowOpen (url, target) {
+    window.open(url, target || '_blank')
   }
 }
 

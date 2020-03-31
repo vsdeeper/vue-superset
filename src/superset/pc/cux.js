@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import getConfig from '../config'
 
 /* ****全局交互方法
  * alert- 消息提示
@@ -19,9 +20,9 @@ const swalConfig = {
 }
 
 const pcux = {
-  lang: 'zh',
   getTrans () {
-    return require(`./lang/${this.lang}.json`)
+    const config = getConfig()
+    return require(`../lang/${config.lang}.json`)
   },
   /**
    * 消息提示

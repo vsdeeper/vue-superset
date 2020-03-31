@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { util } from '../common/util'
+import getConfig from '../config'
 
 const phttpStores = {
-  appId: '100000pc',
-  lang: 'zh',
-  timeout: 5000,
   toast () {},
   onTokenTimeout: () => {},
   getTrans () {
-    return require(`./lang/${this.lang}.json`)
+    const config = getConfig()
+    return require(`../lang/${config.lang}.json`)
   },
   /**
    * post请求
@@ -18,13 +17,14 @@ const phttpStores = {
    * @param args 剩余参数
    */
   post (url, action, params, ...args) {
-    const countDown = args.length > 2 ? args[2] : global.timeout
+    const countDown = args.length > 0 ? args[0] : getConfig().timeout
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
+      const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
       const data = {
-        uuid: util.uuid(),
-        appId: this.appId,
+        uuid: today + '-' + util.uuid(),
+        appId: getConfig().appId,
         action,
         timestamp: new Date().getTime(),
         content: params
@@ -37,7 +37,7 @@ const phttpStores = {
         if (res.status === 200) {
           // 接口通了
           const d = res.data
-          interactionHandle(this, url, d)
+          interactionHandle(this, d)
           resolve(d)
         } else {
           /* eslint-disable no-console */
@@ -47,22 +47,32 @@ const phttpStores = {
           )
         }
       }).catch(err => {
-        reject(err)
-        catchErr(err.message)
+        const msg = err.message
+        let errorMessage
+        if (msg.indexOf('timeout') >= 0) {
+          errorMessage = '请求超时'
+        } else if (msg.indexOf('Network') >= 0) {
+          errorMessage = '网络连接失败'
+        }
+        resolve({
+          success: false,
+          errorMessage
+        })
+        catchErr(this, err.message)
       })
     })
 
-    function catchErr (msg) {
+    function catchErr (_this, msg) {
       if (msg.indexOf('timeout') >= 0) {
         // 超时处理
-        this.toast('error', '请求超时')
+        _this.toast('error', '请求超时')
       } else if (msg.indexOf('Network') >= 0) {
         // 网络连接失败处理
-        this.toast('error', '网络连接失败')
+        _this.toast('error', '网络连接失败')
       }
     }
 
-    function interactionHandle (_this, url, d) {
+    function interactionHandle (_this, d) {
       if (typeof d.success === 'boolean') {
         if (d.success === false) {
           _this.toast(
@@ -90,9 +100,11 @@ export default {
       },
       methods: {
         ppost (url, action, params, ...args) {
-          this.phttpStores.toast = this.$toast
           return this.phttpStores.post(url, action, params, ...args)
         }
+      },
+      created () {
+        this.phttpStores.toast = this.$toast
       }
     })
 

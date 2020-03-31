@@ -6,8 +6,8 @@ import components from './components'
 export default {
   install (Vue) {
     Vue.use(cux)
-    Vue.use(http)
     Vue.use(filters)
     Vue.use(components)
+    Vue.use(http)
   }
 }

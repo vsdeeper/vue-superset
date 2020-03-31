@@ -1,4 +1,8 @@
 {
+  "common": {
+    "today": "今天",
+    "tomorrow": "昨天"
+  },
   "cux": {
     "loadingA": "请等待 {second} 秒...",
     "loadingB": "请等待...",
@@ -9,5 +13,11 @@
     "timeout": "请求超时，请稍后重试",
     "networkFail": "网络连接失败",
     "tokenExpired": "登录失效"
+  },
+  "toast": {
+    "close": "关闭"
+  },
+  "loader": {
+    "wait": "请等待..."
   }
 }
