@@ -24,6 +24,7 @@
  * base64Decode- base64解码
  * storageUsageRate- 可使用存储空间的使用比例
  * windowOpen- 打开浏览器窗口
+ * platform- 获取平台信息
  */
 import getConfig from '../config'
 
@@ -464,6 +465,25 @@ const util = {
   */
   windowOpen (url, target) {
     window.open(url, target || '_blank')
+  },
+  /**
+   * 判断当前平台信息
+   */
+  platform () {
+    const inBrowser = typeof window !== 'undefined'
+    const UA = inBrowser && window.navigator.userAgent.toLowerCase()
+    return {
+      isIE: UA && /msie|trident/.test(UA),
+      isIE9: UA && UA.indexOf('msie 9.0') > 0,
+      isEdge: UA && UA.indexOf('edge/') > 0,
+      isAndroid: (UA && UA.indexOf('android') > 0),
+      isIOS: (UA && /iphone|ipad|ipod|ios/.test(UA)),
+      isIpad: UA && /ipad/.test(UA),
+      isChrome: UA && /chrome\/\d+/.test(UA) && !this.isEdge,
+      isPhantomJS: UA && /phantomjs/.test(UA),
+      isFF: UA && /firefox\/(\d+)/.test(UA),
+      isWeixin: UA && (UA.match(/MicroMessenger/i) === 'micromessenger')
+    }
   }
 }
 
