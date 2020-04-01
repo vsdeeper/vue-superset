@@ -57,6 +57,31 @@ export default {
       }
     })
     /**
+     * 日期分割
+     * @param v 源值 20190312102315
+     */
+    Vue.filter('dateSeparate', function (v, fromat, separator) {
+      if (v) {
+        const vstr = v.toString()
+        const year = vstr.substr(0, 4)
+        const month = vstr.substr(4, 2)
+        const day = vstr.substr(6, 2)
+        const hour = vstr.substr(8, 2)
+        const minute = vstr.substr(10, 2)
+        const second = vstr.substr(12, 2)
+        const s = separator || '-'
+        if (fromat === 'ymd') {
+          return `${year}${s}${month}${s}${day}`
+        } else if (fromat === 'hms') {
+          return `${hour}:${minute}:${second}`
+        } else if (fromat === 'ymdhms') {
+          return `${year}${s}${month}${s}${day} ${hour}:${minute}:${second}`
+        }
+        return '--'
+      }
+      return '--'
+    })
+    /**
      * 日期格式化
      * @param timestamp 时间戳|毫秒数
      * @param type 格式化类型

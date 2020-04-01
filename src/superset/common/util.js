@@ -8,6 +8,7 @@
  * remainTime- 倒计时 分/秒
  * timeMinus- 计算2个时间差
  * msDifference- 计算某一个日期多少天之后(之前)的毫秒数
+ * dateSeparate- 日期时间分割
  * dateFormat- 日期格式化
  * storageSet- 本地存储值设置
  * storageGet- 本地存储值获取
@@ -175,6 +176,31 @@ const util = {
       const myms = ms - _ms
       return myms
     }
+  },
+  /**
+   * 日期分割
+   * @param v 源值 20190312102315
+   */
+  dateSeparate (v, fromat, separator) {
+    if (v) {
+      const vstr = v.toString()
+      const year = vstr.substr(0, 4)
+      const month = vstr.substr(4, 2)
+      const day = vstr.substr(6, 2)
+      const hour = vstr.substr(8, 2)
+      const minute = vstr.substr(10, 2)
+      const second = vstr.substr(12, 2)
+      const s = separator || '-'
+      if (fromat === 'ymd') {
+        return `${year}${s}${month}${s}${day}`
+      } else if (fromat === 'hms') {
+        return `${hour}:${minute}:${second}`
+      } else if (fromat === 'ymdhms') {
+        return `${year}${s}${month}${s}${day} ${hour}:${minute}:${second}`
+      }
+      return '--'
+    }
+    return '--'
   },
   /**
    * 日期格式化
