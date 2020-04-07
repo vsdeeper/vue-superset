@@ -2,6 +2,7 @@ import util from './util'
 import pattern from './pattern'
 import filters from './filters'
 import facebook from './facebook'
+import shake from './shake'
 import weixin from './weixin'
 
 export default {
@@ -10,6 +11,7 @@ export default {
     Vue.use(pattern)
     Vue.use(filters)
     Vue.use(facebook)
+    Vue.use(shake)
   }
 }
 
