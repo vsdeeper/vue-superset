@@ -25,6 +25,7 @@
  * storageUsageRate- 可使用存储空间的使用比例
  * windowOpen- 打开浏览器窗口
  * platform- 获取平台信息
+ * strTransAry- 字符串转数组
  */
 import getConfig from '../config'
 
@@ -484,6 +485,16 @@ const util = {
       isFF: UA && /firefox\/(\d+)/.test(UA),
       isWeixin: UA && (UA.match(/MicroMessenger/i) === 'micromessenger')
     }
+  },
+  /**
+   * 字符串转数组
+   * @param v 源字符串 fdsa,fdsafdsa,gfdfas
+   */
+  strTransAry (v, separator) {
+    if (v) {
+      return v.split(separator || ',')
+    }
+    return []
   }
 }
 
