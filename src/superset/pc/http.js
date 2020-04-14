@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { pcux as cux } from './cux'
 import { util } from '../common/util'
 import getConfig from '../config'
 
@@ -17,8 +18,12 @@ const phttpStores = {
    * @param args 剩余参数
    */
   post (url, action, params, ...args) {
+    const token = util.storageGet('local', 'token')
     const countDown = args.length > 0 ? args[0] : getConfig().timeout
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
+    if (token) {
+      axios.defaults.headers.common['token'] = token
+    }
 
     return new Promise((resolve) => {
       const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
@@ -29,6 +34,7 @@ const phttpStores = {
         timestamp: new Date().getTime(),
         content: params
       }
+
       axios({
         method: 'post',
         url,
@@ -47,38 +53,47 @@ const phttpStores = {
           )
         }
       }).catch(err => {
-        const msg = err.message
-        let errorMessage
-        if (msg.indexOf('timeout') >= 0) {
-          errorMessage = '请求超时'
-        } else if (msg.indexOf('Network') >= 0) {
-          errorMessage = '网络连接失败'
-        }
-        resolve({
-          success: false,
-          errorMessage
+        console.error(err)
+        catchErr(this, err.message).then(errorMessage => {
+          resolve({
+            success: false,
+            errorMessage
+          })
         })
-        catchErr(this, err.message)
       })
     })
 
     function catchErr (_this, msg) {
-      if (msg.indexOf('timeout') >= 0) {
-        // 超时处理
-        _this.toast('error', '请求超时')
-      } else if (msg.indexOf('Network') >= 0) {
-        // 网络连接失败处理
-        _this.toast('error', '网络连接失败')
-      }
+      return new Promise(resolve => {
+        const trans = _this.getTrans().http
+        if (msg.indexOf('timeout') >= 0) {
+          // 超时处理
+          _this.toast('error', trans.timeout)
+          resolve(trans.timeout)
+        } else if (msg.indexOf('Network') >= 0) {
+          // 网络连接失败处理
+          _this.toast('error', trans.networkFail)
+          resolve(trans.networkFail)
+        }
+      })
     }
 
     function interactionHandle (_this, d) {
+      const trans = _this.getTrans().http
       if (typeof d.success === 'boolean') {
         if (d.success === false) {
-          _this.toast(
-            'error',
-            d.errorMessage || d.errorCode
-          )
+          switch (d.errorCode) {
+            case 'TOKEN_TIME_OUT':
+              cux.alert({
+                message: trans.tokenExpired
+              }).then(() => {
+                _this.onTokenTimeout()
+              })
+              break
+            default:
+              _this.toast('error', d.errorMessage || d.errorCode || d.errmsg || d.errcode)
+              break
+          }
         }
       } else {
         _this.toast(
