@@ -15,11 +15,13 @@ const phttpStores = {
    * @param url 请求地址
    * @param action 响应名称
    * @param params 入参
-   * @param args 剩余参数
+   * @param args 剩余参数[timeout, baseURL]
    */
   post (url, action, params, ...args) {
     const token = util.storageGet('local', 'token')
     const countDown = args.length > 0 ? args[0] : getConfig().timeout
+    const defaultBaseURL = axios.defaults.baseURL
+    const baseURL = args.length > 1 ? args[1] : defaultBaseURL
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
     if (token) {
       axios.defaults.headers.common['token'] = token
@@ -38,6 +40,7 @@ const phttpStores = {
       axios({
         method: 'post',
         url,
+        baseURL,
         data
       }).then(res => {
         if (res.status === 200) {
