@@ -88,7 +88,8 @@ const phttpStores = {
           switch (d.errorCode) {
             case 'TOKEN_TIME_OUT':
               cux.alert({
-                message: trans.tokenExpired
+                text: trans.tokenExpired,
+                icon: 'warning',
               }).then(() => {
                 _this.onTokenTimeout()
               })
