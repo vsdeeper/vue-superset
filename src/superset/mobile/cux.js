@@ -26,6 +26,23 @@ const mcux = {
     })
   },
   /**
+   * 轻提示-成功
+   * @param message 文字信息
+   */
+  toastSuccess (message) {
+    return new Promise(resolve => {
+      Toast({
+        type: 'success',
+        message,
+        forbidClick: true,
+        duration: 2000
+      })
+      setTimeout(() => {
+        resolve()
+      }, 2000)
+    })
+  },
+  /**
    * loading开始
    * @param showCountDown 是否显示倒计时-Boolean-默认false
    */
