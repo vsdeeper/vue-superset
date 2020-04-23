@@ -23,6 +23,11 @@ const mhttp = {
     const isToast = args.length > 3 ? args[3] : true
 
     axios.defaults.timeout = countDown // 超时时间，请求会被中断
+
+    const token = util.storageGet('local', 'token')
+    if (token) {
+      axios.defaults.headers.common['memberToken'] = token
+    }
     return new Promise((resolve) => {
       const today = util.dateFormat(new Date().getTime(), 'day').replace(/-/g, '')
       const data = {
