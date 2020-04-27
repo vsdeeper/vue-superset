@@ -17,30 +17,29 @@ const mcux = {
   },
   /**
    * 轻提示
-   * @param message 文字信息
+   * @param options 配置参数
    */
-  toast (message) {
-    Toast({
-      duration: 3000,
-      message
-    })
-  },
-  /**
-   * 轻提示-成功
-   * @param message 文字信息
-   */
-  toastSuccess (message) {
-    return new Promise(resolve => {
+  toast (options) {
+    if (typeof options === 'object') {
+      if (options.type === 'success') {
+        return new Promise(resolve => {
+          Toast({
+            type: options.type,
+            message: options.message,
+            forbidClick: true,
+            duration: options.duration || 2000
+          })
+          setTimeout(() => {
+            resolve()
+          }, options.duration || 2000)
+        })
+      }
+    } else {
       Toast({
-        type: 'success',
-        message,
-        forbidClick: true,
-        duration: 2000
+        duration: 3000,
+        message: options
       })
-      setTimeout(() => {
-        resolve()
-      }, 2000)
-    })
+    }
   },
   /**
    * loading开始

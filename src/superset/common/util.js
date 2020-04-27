@@ -213,8 +213,11 @@ const util = {
    */
   dateFormat (timestamp, type, sr, todayOrYesterday) {
     try {
+      if (typeof timestamp === 'undefined') {
+        return '--'
+      }
       if (typeof timestamp !== 'number') {
-        throw new Error('dateFormat: {timestamp}必须为Number类型')
+        throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
       }
 
       const date = new Date(timestamp)
@@ -483,7 +486,8 @@ const util = {
       isChrome: UA && /chrome\/\d+/.test(UA) && !this.isEdge,
       isPhantomJS: UA && /phantomjs/.test(UA),
       isFF: UA && /firefox\/(\d+)/.test(UA),
-      isWeixin: UA && (UA.match(/MicroMessenger/i) === 'micromessenger')
+      isWeixin: UA && (UA.match(/MicroMessenger/i) !== null),
+      isAlipay: UA && (UA.match(/AlipayClient/i) !== null)
     }
   },
   /**
