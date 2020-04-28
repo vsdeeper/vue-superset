@@ -1,12 +1,14 @@
-const defaultConfig = {
-  lang: 'zh',
-  timeout: 5000,
-  appId: '19900105'
+const config = {
+  default: {
+    lang: 'zh',
+    timeout: 5000,
+    appId: '19900105'
+  },
+  custom: {}
 }
-export const custom = {
-  config: {}
-}
-
-const getConfig = () => Object.assign(defaultConfig, custom.config)
+const getConfig = () => Object.assign(config.default, config.custom)
 
 export default getConfig
+export {
+  config
+}

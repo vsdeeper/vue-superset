@@ -123,7 +123,7 @@
             fab
             icon
           >
-            <v-icon>mdi-settings</v-icon>
+            <v-icon>mdi-cog</v-icon>
           </v-btn>
         </template>
         <side-bar-set
@@ -148,11 +148,10 @@
 <script>
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import pc from '@/superset/pc'
-import { custom } from '@/superset/config'
+import { Config, Pc } from '@/superset'
 import { SideBarSet } from '@/components'
 
-Vue.use(pc)
+Vue.use(Pc)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
 
@@ -205,7 +204,7 @@ export default {
     }
   },
   created () {
-    custom.config = {
+    Config.custom = {
       appId: '64e6',
       lang: 'en'
     }
