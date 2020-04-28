@@ -4,6 +4,8 @@ node_modules
 /common
 /mobile
 /pc
+/config
+/lang
 
 # local env files
 .env.local
