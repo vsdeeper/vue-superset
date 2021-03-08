@@ -15,11 +15,11 @@
         <v-icon size="18" class="mx-1">mdi-logout-variant</v-icon>登录
       </v-btn>
     </v-app-bar> -->
-    <v-content>
+    <v-main>
       <v-container fluid class="fill-height">
       <router-view></router-view>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

@@ -1,17 +1,18 @@
-const global = require('./global.config')
 const proxy = {}
-
-proxy[global.mockPublicPath] = {
-  target: 'https://' + global.mockDomain,
+const env = process.env.NODE_ENV
+const secondLevelDir = process.env.VUE_APP_SECONDLEVEL_DIR
+const interfaceDomain = process.env.VUE_APP_INTERFACE_DOMAIN
+proxy['/'] = {
+  target: interfaceDomain,
   changeOrigin: true // 允许使用localhost
 }
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? global.publicPath : '/',
+  publicPath: (env === 'production' || env === 'release') ? secondLevelDir : '/',
   devServer: {
     proxy
   },
-  transpileDependencies: [
-    'vuetify'
-  ]
+  configureWebpack: {
+    devtool: 'source-map' // 确保所构建的内容每个环境都具有sourcemap
+  }
 }

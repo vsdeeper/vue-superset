@@ -1,7 +1,7 @@
 ###  #基于vue框架技术的超集合
 
 * 经过众多移动端和PC端项目的实践，以本人所在公司项目的特点而创建
-* 主要为方便前端通用代码块的统一维护和更新，目前包含common和mobile两个模块集合
+* 主要为方便前端通用代码块的统一维护和更新，目前包含common、mobile和pc三个模块集合
 * 想要作为自己公司项目的依赖来开发的，请谨慎使用
 
 集合结构预览：
@@ -40,7 +40,7 @@ common- 无任何依赖通用模块
     loadSdk- 加载sdk
     checkFB- 检测window对象中FB对象的初始化完成
 
-  weixin- 常用微信功能方法，只适用于微信中，按需引用，如：import { weixin } from 'vue-superset/common'
+  weixin- 常用微信功能方法，只适用于微信中，按需引用，如：import { Weixin } from 'vue-superset'
     authorize- 微信公众号授权
 
   pattern- 常用正则集合
@@ -100,13 +100,13 @@ npm i vue-superset --save
 #### ##全局配置
 
 ```
-import { custom } from 'vue-superset/config'
+import { Config } from 'vue-superset'
 
 ...
 
-custom.config = {
-  appId: '900105',
-  timeout: 5000,
+Config.custom = {
+  appId: 'paas-ui-admin',
+  timeout: 10000,
   lang: 'zh'
 }
 ```
@@ -116,13 +116,11 @@ custom.config = {
 main.js中引入：
 
 ```
-import common from 'vue-superset/common'
-import mobile from 'vue-superset/mobile'
-
+import { Common, Mobile } from 'vue-superset'
 ...
 
-Vue.use(common)
-Vue.use(mobile)
+Vue.use(Common)
+Vue.use(Mobile)
 ```
 
 #### ##使用说明-mobile端
@@ -141,13 +139,11 @@ this.$http.post(url, action, params, ...args)
 main.js中引入：
 
 ```
-import common from 'vue-superset/common'
-import mobile from 'vue-superset/pc'
-
+import { Common, Pc } from 'vue-superset'
 ...
 
-Vue.use(common)
-Vue.use(pc)
+Vue.use(Common)
+Vue.use(Pc)
 ```
 
 #### ##使用说明-pc端

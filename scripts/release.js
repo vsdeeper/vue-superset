@@ -1,15 +1,10 @@
 const shell = require('shelljs')
 
-// 删除
-shell.rm('-rf', 'common')
-shell.rm('-rf', 'mobile')
-shell.rm('-rf', 'pc')
-shell.rm('-rf', 'config')
-shell.rm('-rf', 'lang')
+// 删除es目录
+shell.rm('-rf', 'es')
+
+// 创建es目录
+shell.mkdir('-p', 'es')
 
 // 复制
-shell.cp('-R', 'src/superset/common/', './')
-shell.cp('-R', 'src/superset/mobile/', './')
-shell.cp('-R', 'src/superset/pc/', './')
-shell.cp('-R', 'src/superset/config/', './')
-shell.cp('-R', 'src/superset/lang/', './')
+shell.cp('-Rf', ['src/superset/*'], 'es')

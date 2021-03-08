@@ -2,6 +2,7 @@ import Layout from '@/views/Pc/Layout'
 import AuthLayout from '@/views/Pc/AuthLayout'
 import Home from '@/views/Pc/Home.vue'
 import Login from '@/views/Pc/Login.vue'
+import DataTable from '@/views/Pc/DataTable'
 
 const AuthRoutes = {
   path: '/pc',
@@ -20,8 +21,7 @@ const AuthRoutes = {
           },
           {
             text: '登录',
-            disabled: true,
-            href: '#/pc/login'
+            disabled: true
           }
         ]
       }
@@ -43,6 +43,24 @@ const ExampleRoutes = {
             text: '面板',
             disabled: false,
             href: '#/pc/'
+          }
+        ]
+      }
+    },
+    {
+      path: 'dataTable',
+      name: '数据表格',
+      components: { default: DataTable },
+      meta: {
+        breadcrumbs: [
+          {
+            text: '通用页面',
+            disabled: false,
+            href: '#/pc/'
+          },
+          {
+            text: '数据表格',
+            disabled: true
           }
         ]
       }

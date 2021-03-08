@@ -43,7 +43,7 @@ export default {
      * @param dec 小数位
      */
     Vue.filter('numFormat', function (num, dec) {
-      if (typeof num !== 'undefined') {
+      if (typeof num !== 'undefined' && num !== null) {
         num = Number(num)
         if (num || num === 0) {
           if (typeof dec === 'number') {
@@ -57,6 +57,31 @@ export default {
       }
     })
     /**
+     * 日期分割
+     * @param v 源值 20190312102315
+     */
+    Vue.filter('dateSeparate', function (v, fromat, separator) {
+      if (v) {
+        const vstr = v.toString()
+        const year = vstr.substr(0, 4)
+        const month = vstr.substr(4, 2)
+        const day = vstr.substr(6, 2)
+        const hour = vstr.substr(8, 2)
+        const minute = vstr.substr(10, 2)
+        const second = vstr.substr(12, 2)
+        const s = separator || '-'
+        if (fromat === 'ymd') {
+          return `${year}${s}${month}${s}${day}`
+        } else if (fromat === 'hms') {
+          return `${hour}:${minute}:${second}`
+        } else if (fromat === 'ymdhms') {
+          return `${year}${s}${month}${s}${day} ${hour}:${minute}:${second}`
+        }
+        return '--'
+      }
+      return '--'
+    })
+    /**
      * 日期格式化
      * @param timestamp 时间戳|毫秒数
      * @param type 格式化类型
@@ -65,13 +90,9 @@ export default {
      */
     Vue.filter('dateFormat', function (timestamp, type, sr, todayOrYesterday) {
       try {
-        if (typeof timestamp === 'undefined') {
+        if (typeof timestamp === 'undefined' || timestamp === null || timestamp === '') {
           return '--'
         }
-        if (typeof timestamp !== 'number') {
-          throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
-        }
-
         const date = new Date(timestamp)
         const year = date.getFullYear()
         const month = date.getMonth() + 1

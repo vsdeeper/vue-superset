@@ -61,7 +61,17 @@ export default {
       params: {
         phoneNumber: '15000291276',
         verificationCode: '333333'
-      }
+      },
+      searchItems: [
+        {
+          type: 'select',
+          label: '租户类型',
+          key: 'tenancyType',
+          options: [
+            { text: 'fdsaf', value: '23' }
+          ]
+        }
+      ]
     }
   },
   methods: {
