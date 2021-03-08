@@ -4,6 +4,7 @@ import filters from './filters'
 import facebook from './facebook'
 import shake from './shake'
 import weixin from './weixin'
+import QRCode from './QRCode'
 
 export default {
   install (Vue) {
@@ -16,5 +17,6 @@ export default {
 }
 
 export {
-  weixin
+  weixin,
+  QRCode
 }

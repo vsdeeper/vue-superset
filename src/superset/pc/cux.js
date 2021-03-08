@@ -58,18 +58,23 @@ const pcux = {
     const trans = this.getTrans().cux
     swalConfig.confirmButtonText = trans.ok
     swalConfig.cancelButtonText = trans.cancel
+    const allowOutsideClick = typeof params.allowOutsideClick === 'undefined' ? true : params.allowOutsideClick
 
-    Swal.fire({
-      ...swalConfig,
-      title: params.title || null,
-      text: params.text || null,
-      icon: params.icon || null, // warning | error | success | info | question
-      input: params.input || null,
-      html: params.html || null,
-      showCancelButton: true,
-      showLoaderOnConfirm: true,
-      allowOutsideClick: () => !Swal.isLoading(),
-      preConfirm: params.preConfirm
+    return new Promise(resolve => {
+      Swal.fire({
+        ...swalConfig,
+        title: params.title || null,
+        text: params.text || null,
+        icon: params.icon || null, // warning | error | success | info | question
+        input: params.input || null,
+        html: params.html || null,
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        allowOutsideClick: () => !Swal.isLoading() && allowOutsideClick,
+        preConfirm: params.preConfirm
+      }).then(result => {
+        resolve(result) // {value: true} | {dismiss: "cancel"} | {dismiss: "backdrop"}
+      })
     })
   }
 }

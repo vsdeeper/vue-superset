@@ -135,11 +135,11 @@
         ></side-bar-set>
       </v-menu>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <v-container fluid>
       <router-view></router-view>
       </v-container>
-    </v-content>
+    </v-main>
     <cm-toast></cm-toast>
     <cm-loader></cm-loader>
   </v-app>
@@ -148,7 +148,7 @@
 <script>
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import { Config, Pc } from '@/superset'
+import { Pc } from '@/superset'
 import { SideBarSet } from '@/components'
 
 Vue.use(Pc)
@@ -163,7 +163,7 @@ export default {
     drawer: true,
     expandonhover: true,
     displayBgImg: true,
-    sidebarColor: 'green',
+    sidebarColor: 'blue',
     sidebarBg: 'black',
     siderbarSrc: require('@/assets/img/sidebar-1.jpg'),
     items: [
@@ -181,6 +181,11 @@ export default {
             id: 'DL',
             title: '登录',
             path: '/pc/login'
+          },
+          {
+            id: 'DT',
+            title: '数据表格',
+            path: '/pc/dataTable'
           }
         ]
       }
@@ -204,11 +209,6 @@ export default {
     }
   },
   created () {
-    Config.custom = {
-      appId: '64e6',
-      lang: 'en'
-    }
-    this.$store.commit('destroyVconsole')
     const path = this.$route.path
     this.items.find(ele1 => {
       if (ele1.children) {

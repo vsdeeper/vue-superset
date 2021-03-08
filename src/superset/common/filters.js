@@ -43,7 +43,7 @@ export default {
      * @param dec 小数位
      */
     Vue.filter('numFormat', function (num, dec) {
-      if (typeof num !== 'undefined') {
+      if (typeof num !== 'undefined' && num !== null) {
         num = Number(num)
         if (num || num === 0) {
           if (typeof dec === 'number') {
@@ -90,13 +90,9 @@ export default {
      */
     Vue.filter('dateFormat', function (timestamp, type, sr, todayOrYesterday) {
       try {
-        if (typeof timestamp === 'undefined') {
+        if (typeof timestamp === 'undefined' || timestamp === null || timestamp === '') {
           return '--'
         }
-        if (typeof timestamp !== 'number') {
-          throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
-        }
-
         const date = new Date(timestamp)
         const year = date.getFullYear()
         const month = date.getMonth() + 1

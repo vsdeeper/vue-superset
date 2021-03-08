@@ -26,6 +26,11 @@
  * windowOpen- 打开浏览器窗口
  * platform- 获取平台信息
  * strTransAry- 字符串转数组
+ * isJSON- 判断字符串是否为JSON格式
+ * ddlogin- 钉钉扫码登录
+ * getInterfaceDomain- 获取接口域名
+ * extractArray- 提取指定字段的数组数据
+ * extractObject- 提取指定字段的map数据
  */
 import getConfig from '../config'
 
@@ -84,14 +89,17 @@ const util = {
    * @param dec 小数位
    */
   numFormat (num, dec) {
-    if (num || num === 0) {
-      if (typeof dec === 'number') {
-        return num.toFixed(dec).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
-      } else {
-        return num.replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+    if (typeof num !== 'undefined' && num !== null) {
+      num = Number(num)
+      if (num || num === 0) {
+        if (typeof dec === 'number') {
+          return num.toFixed(dec).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+        } else {
+          return num.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,')
+        }
       }
     } else {
-      return '——'
+      return '--'
     }
   },
   /**
@@ -213,13 +221,9 @@ const util = {
    */
   dateFormat (timestamp, type, sr, todayOrYesterday) {
     try {
-      if (typeof timestamp === 'undefined') {
+      if (typeof timestamp === 'undefined' || timestamp === null || timestamp === '') {
         return '--'
       }
-      if (typeof timestamp !== 'number') {
-        throw new Error('dateFormat: 参数{timestamp}必须为Number类型')
-      }
-
       const date = new Date(timestamp)
       const year = date.getFullYear()
       const month = date.getMonth() + 1
@@ -266,6 +270,33 @@ const util = {
     } catch (error) {
       console.error(error)
     }
+  },
+  /**
+   * 日期分割
+   * @param v 源值 20190312102315 =>
+   * @param fromat 格式标准
+   * @param separator 分隔符
+   */
+  dateSeparate (v, fromat, separator) {
+    if (v) {
+      const vstr = v.toString()
+      const year = vstr.substr(0, 4)
+      const month = vstr.substr(4, 2)
+      const day = vstr.substr(6, 2)
+      const hour = vstr.substr(8, 2)
+      const minute = vstr.substr(10, 2)
+      const second = vstr.substr(12, 2)
+      const s = separator || '-'
+      if (fromat === 'ymd') {
+        return `${year}${s}${month}${s}${day}`
+      } else if (fromat === 'hms') {
+        return `${hour}:${minute}:${second}`
+      } else if (fromat === 'ymdhms') {
+        return `${year}${s}${month}${s}${day} ${hour}:${minute}:${second}`
+      }
+      return '--'
+    }
+    return '--'
   },
   /**
    * 本地存储值设置
@@ -499,6 +530,107 @@ const util = {
       return v.split(separator || ',')
     }
     return []
+  },
+  /**
+   * 判断字符串是否为JSON格式
+   * @param v 源字符串
+   */
+  isJSON (str) {
+    if (typeof str == 'string') {
+      try {
+        const obj = JSON.parse(str)
+        if (typeof obj == 'object' && obj ) {
+          return true
+        } else {
+          return false
+        }
+      } catch (e) {
+        return false
+      }
+    }
+  },
+  /**
+   * 钉钉登录
+   * @param params
+   */
+  ddlogin (params) {
+    const redirectUri = encodeURIComponent(`${params.redirectUri}`)
+    const fullUrl = `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=${params.appid}&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=${redirectUri}`
+    const goto = encodeURIComponent(fullUrl)
+    /* eslint-disable */
+    DDLogin({
+      id: `${params.id}`, // 这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
+      goto: `${goto}`, // 扫码跳转连接
+      style: params.style || 'border:none; background-color:#FFFFFF;',
+      width: `${params.width}`,
+      height: `${params.height}`
+    })
+    const handleMessage = function (event) {
+      const origin = event.origin
+      if (origin === "https://login.dingtalk.com") { // 判断是否来自ddLogin扫码事件。
+          const loginTmpCode = event.data // 拿到loginTmpCode后就可以在这里构造跳转链接进行跳转了
+          window.location.href = fullUrl + '&loginTmpCode=' + loginTmpCode
+      }
+    }
+    if (typeof window.addEventListener !== 'undefined') {
+      window.addEventListener('message', handleMessage, false)
+    } else if (typeof window.attachEvent !== 'undefined') {
+      window.attachEvent('onmessage', handleMessage)
+    }
+  },
+  /**
+   * 获取接口域名
+   * @param env 环境变量
+   * @param options { appName, countryCode }
+   */
+  getInterfaceDomain (env, options) {
+    let envPath
+    const appName = typeof options.appName === 'string' ? options.appName : 'paas-app-admin'
+    const countryCode = typeof options.countryCode === 'string' ? (options.countryCode === 'cn' ? '' : options.countryCode + '-') : ''
+    if (env === 'production') {
+      envPath = ''
+    } else if (env === 'debug' || env === 'development') {
+      envPath = 'dev-'
+    } else {
+      envPath = env + '-'
+    }
+    if (env === 'production') {
+      return `https://${countryCode}${appName}.e-buy.com`
+    } else if (env === 'mock') {
+      return `https://apimock.e-buy.com`
+    } else {
+      return `https://${envPath}${appName}.e-buy.com`
+    }
+  },
+  /**
+   * 提取指定字段的数组数据
+   * @param keystr 属性组，例"marketId,marketName"
+   * @param source 数据源 []
+   */
+  extractArray (keystr, source) {
+    const arr = []
+    const keys = keystr ? keystr.split(',') : []
+    source.forEach(ele => {
+      const obj = {}
+      keys.forEach(key => {
+        obj[key] = ele[key]
+      })
+      arr.push(obj)
+    })
+    return arr
+  },
+  /**
+   * 提取指定字段的map数据
+   * @param keystr 属性组，例"marketId,marketName"
+   * @param source 数据源 {}
+   */
+  extractObject (keystr, source) {
+    const obj = {}
+    const keys = keystr ? keystr.split(',') : []
+    keys.forEach(key => {
+      obj[key] = source[key]
+    })
+    return obj
   }
 }
 

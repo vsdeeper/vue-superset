@@ -55,8 +55,8 @@ export default {
     return {
       sidebarColors: [
         { color: 'purple', active: false },
-        { color: 'blue', active: false },
-        { color: 'green', active: true },
+        { color: 'green', active: false },
+        { color: 'blue', active: true },
         { color: 'orange', active: false },
         { color: 'pink', active: false }
       ],

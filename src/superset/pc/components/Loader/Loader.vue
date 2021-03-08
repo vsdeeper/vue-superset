@@ -25,6 +25,7 @@
 import getConfig from '../../../config'
 
 export default {
+  name: 'cm-loader',
   computed: {
     lang () {
       return getConfig().lang

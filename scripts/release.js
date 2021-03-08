@@ -1,10 +1,10 @@
 const shell = require('shelljs')
 
-// 删除dist目录
-shell.rm('-rf', 'dist')
+// 删除es目录
+shell.rm('-rf', 'es')
 
-// 创建dist目录
-shell.mkdir('-p', 'dist')
+// 创建es目录
+shell.mkdir('-p', 'es')
 
 // 复制
-shell.cp('-Rf', ['src/superset/common/', 'src/superset/config/', 'src/superset/lang/', 'src/superset/mobile/', 'src/superset/pc/'], 'dist')
+shell.cp('-Rf', ['src/superset/*'], 'es')

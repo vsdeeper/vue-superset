@@ -1,6 +1,8 @@
 /**
  * 原生摇一摇方法
- * ios13+里面需要用户手动触发
+ * 兼容性说明：
+ * 1. 理论上支持的最新版的谷歌浏览器、Safari浏览器、火狐浏览器等
+ * 2. ios13+里面需要用户手动触发
  * 代码示例：
  * const start = Shake.start({
  *   shakeSingle: false,
