@@ -6,6 +6,7 @@
 import Vue from 'vue'
 import VConsole from 'vconsole'
 import mobile from '@/superset/mobile'
+import 'vant/lib/index.css'
 
 Vue.use(mobile, { key: 'M' })
 

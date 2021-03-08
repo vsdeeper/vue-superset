@@ -5,8 +5,6 @@ import router from './router'
 import store from './store'
 import common from './superset/common'
 import vuetify from './plugins/vuetify'
-import 'vant/lib/index.css'
-import './assets/css/common.css'
 
 Vue.config.productionTip = false
 

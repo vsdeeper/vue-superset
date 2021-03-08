@@ -51,7 +51,6 @@
             color="#fff"
             v-model="item.active"
             :prepend-icon="item.icon"
-            no-action
           >
             <template v-slot:activator>
               <v-list-item-content>
@@ -150,6 +149,10 @@ import Vue from 'vue'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { Pc } from '@/superset'
 import { SideBarSet } from '@/components'
+import '@/superset/pc/style/common.css'
+import '@/superset/pc/style/navigation.css'
+import '@/superset/pc/style/swal.css'
+import '@/superset/pc/fonts/PingFang-SC-Regular.css'
 
 Vue.use(Pc)
 Vue.component('ValidationProvider', ValidationProvider)
