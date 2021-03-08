@@ -35,8 +35,6 @@
 </template>
 
 <script>
-import { log } from "util"
-
 export default {
   name: 'ux-date-range',
   data () {
